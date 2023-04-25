@@ -35,6 +35,12 @@ void TokenStream::putback(Token buffer) {
 
 }
 
+void TokenStream::clear() {
+
+    Stream.clear();
+
+}
+
 Token TokenStream::set_Token_type(const Token &buffer) {
 
     string s = buffer.word;

@@ -53,6 +53,7 @@ void main_menu(Settings &Main_settings, TokenStream &Stream) {
 
         catch (const char* msg) { 
             error (msg);
+            Stream.clear();
         }
 
 

@@ -16,6 +16,8 @@ public:
     Token get();
     void putback(Token buffer);
 
+    void clear();
+
     void inicialise_Varriable(const string &s, const double &value);
     void set_Varriable(const string &s, const double &value);
 
