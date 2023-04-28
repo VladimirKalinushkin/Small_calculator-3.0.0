@@ -18,7 +18,6 @@ public:
             void what(); 
         private:
             char *message = NULL;
-            char *bad_value_string = NULL;
     };
 
 private:
