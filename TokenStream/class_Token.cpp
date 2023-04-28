@@ -1,5 +1,4 @@
 
-#include "class_Token.h"
 
 Token Token::get(){
 
@@ -16,7 +15,7 @@ Token Token::get(){
         return get_word_lexeme_from_istream(ret.type);
 
     else
-        throw " Неправильный ввод! \n";
+        throw TokenStream::exeption("Неправильный ввод!");
         
 
 }

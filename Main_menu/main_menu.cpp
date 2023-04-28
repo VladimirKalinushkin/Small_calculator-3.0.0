@@ -51,9 +51,11 @@ void main_menu(Settings &Main_settings, TokenStream &Stream) {
 
         }
 
-        catch (const char* msg) { 
-            error (msg);
+        catch (TokenStream::exeption& ex) {
+            ex.what();
             Stream.clear();
+            cin.clear();
+            cin.ignore(1000, '\n');
         }
 
 
@@ -64,7 +66,7 @@ void main_menu(Settings &Main_settings, TokenStream &Stream) {
 void check_correct_end_input(TokenStream &Stream) {
     
     if(Stream.get().type != print) {
-        throw " Выражение неправильно завершено! Нет ';' \n";
+        throw TokenStream::exeption("Выражение неправильно завершено! Нет ';' !");
     };
 
 }

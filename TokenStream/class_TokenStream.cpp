@@ -1,6 +1,4 @@
 
-#include "class_TokenStream.h"
-
 
 TokenStream::TokenStream(const map <string, double> &constantes, const set <string> &key_vords, const set <string> &mathematic_functions) {
 
@@ -90,7 +88,7 @@ void TokenStream::set_Varriable(const string &s, const double &value) {
         }
     }
 
-    throw " Неизвестная переменная! \n";
+    throw exeption(("Неизвестная переменная!"));
 
 }
 
@@ -118,5 +116,15 @@ void TokenStream::inicialiseStream(const map <string, double> &constantes, const
         ConstantesStream.push_back(T);
     }
 
+}
+
+TokenStream::exeption::exeption(char *msg) {
+
+    message = msg;
+}
+void TokenStream::exeption::what() {
+
+    if (message)
+        cerr << message << "\n";
 }
 

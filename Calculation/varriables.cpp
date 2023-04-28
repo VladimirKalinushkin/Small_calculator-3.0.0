@@ -13,10 +13,10 @@ void set_new_varriable(TokenStream &Stream){
             Stream.inicialise_Varriable(name.word, value);
 
         }
-        else throw "Пропущено '=' \n";
+        else throw TokenStream::exeption("Пропущено '=' !");
 
     }
-    else throw " Имя переменной занято! \n";
+    else throw TokenStream::exeption(" Имя переменной занято!");
 
 
 }
