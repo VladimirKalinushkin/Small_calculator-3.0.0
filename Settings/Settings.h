@@ -13,6 +13,7 @@ class Settings
 
         Modes_calculating get_mode() { return _mode_calculating; }
         Modes_input get_mode_input() { return _mode_input; }
+        string get_name_file_to_input() { return _name_file_to_input; }
 
         void set_all_settings();
         void set_mode_input(Modes_input _mode) { _mode_input = _mode; }

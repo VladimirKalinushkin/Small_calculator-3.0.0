@@ -3,7 +3,11 @@ class TokenStream {
 
 public:
 
-    TokenStream(const map <string, double> &constantes, const set <string> &key_vords, const set <string> &mathematic_functions);
+    TokenStream(const map <string,
+                 double> &constantes,
+                 const set <string> &key_vords,
+                 const set <string> &mathematic_functions,
+                 Settings &settings);
 
     Token get();
     void putback(Token buffer);
@@ -12,13 +16,9 @@ public:
 
     void inicialise_Varriable(const string &s, const double &value);
     void set_Varriable(const string &s, const double &value);
-    class exeption : public exception {
-        public:
-            exeption(char *msg);
-            void what(); 
-        private:
-            char *message = NULL;
-    };
+
+    Settings *Main_settings = NULL;
+    ifstream file_for_input;
 
 private:
 
@@ -31,6 +31,15 @@ private:
     Token set_Token_type(const Token &buffer);
     void inicialiseStream(const map <string, double> &constantes, const set <string> &key_vords, const set <string> &mathematic_functions);
 
+public:
+
+    class exeption : public exception {
+        public:
+            exeption(char *msg);
+            void what(); 
+        private:
+            char *message = NULL;
+    };
 };
 
 
