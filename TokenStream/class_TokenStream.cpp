@@ -18,7 +18,7 @@ Token TokenStream::get() {
     }
     else {
 
-        Token buffer = buffer.get();
+        Token buffer = buffer.get(cin);
 
         if (buffer.type == type_lexeme::word) return set_Token_type(buffer);
 

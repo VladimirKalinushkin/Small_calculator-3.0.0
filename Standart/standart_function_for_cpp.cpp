@@ -9,36 +9,23 @@ void error(string msg)
     cerr << msg;
 }
 
-string get_word_from_string()
+string get_word_from_string(istream &is)
 {
 
     string word = "";
-    char c;
 
-    c = getchar();
-    if (isalpha(c))
-        cin.putback(c);
-    else
-        throw "Error in function 'get_word_from_string' in down level\n";
-
-    while (cin)
+    while (is)
     {
-
-        c = getchar();
-        if (isalpha(c) || c == '_' /*|| isnumber(c)*/)
-        {
-
-            word.push_back(c);
-        }
+        char c = is.get();
+        if (isalpha(c))
+            word += c;
+            
         else
         {
-
-            cin.putback(c);
+            is.putback(c);
             return word;
         }
     }
-
-    return word;
 }
 vector<string> SplitIntoWords(const string &text)
 {

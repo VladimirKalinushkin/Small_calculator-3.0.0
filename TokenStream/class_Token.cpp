@@ -1,47 +1,31 @@
 
 
-Token Token::get(){
+Token Token::get(istream &is)
+{
 
     Token ret;
-    cin >> ret.type;
+    is >> ret.type;
 
-    if(Main_modes_simbols.count(ret.type))
+    if (Main_modes_simbols.count(ret.type))
         return ret;
-        
-    else if(isdigit(ret.type))  
-        return get_number_lexeme_from_istream(ret.type);
 
-    else if( isalpha(ret.type) )
-        return get_word_lexeme_from_istream(ret.type);
+    else if (isdigit(ret.type))
+    {
+        is.putback(ret.type);
+        is >> ret.value;
+        ret.type = type_lexeme::number;
+        return ret;
+    }
+
+    else if (isalpha(ret.type))
+    {
+        is.putback(ret.type);
+        ret.word = get_word_from_string(cin);
+        ret.type = type_lexeme::word;
+        return ret;
+    }
 
     else
         throw TokenStream::exeption("Неправильный ввод!");
-        
-
 }
-
-Token get_number_lexeme_from_istream(const char &putbacked_simbol)
-{
-    Token ret;
-    ret.type = type_lexeme::number;
-    
-    cin.putback(putbacked_simbol);
-    cin >> ret.value;
-
-    return ret;
-
-}
-Token get_word_lexeme_from_istream(const char &putbacked_simbol)
-{
-    Token ret;
-    ret.type = type_lexeme::word;
-
-    cin.putback(putbacked_simbol);
-
-    ret.word = get_word_from_string();
-
-    return ret;
-
-}
-
 

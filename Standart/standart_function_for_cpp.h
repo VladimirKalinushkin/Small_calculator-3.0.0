@@ -1,7 +1,7 @@
 
 void error(string msg);
 
-string get_word_from_string();
+string get_word_from_string(istream &is);
 vector<string> SplitIntoWords(const string &text);
 set<string> MakeSet(const vector<string> &query_words);
 
