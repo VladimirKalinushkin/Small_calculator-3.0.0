@@ -42,7 +42,8 @@ const map <string, double> constantes = {
     };
 const set <string> key_vords = {
 
-    "var"
+    "var",
+    "from_x"
 
 };
 const set <string> mathematic_functions = {

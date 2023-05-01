@@ -17,7 +17,7 @@ string get_word_from_string(istream &is)
     while (is)
     {
         char c = is.get();
-        if (isalpha(c))
+        if (isalpha(c) || c == '_')
             word += c;
             
         else
