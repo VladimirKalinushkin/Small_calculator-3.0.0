@@ -1,9 +1,6 @@
 
 
-TokenStream::TokenStream(const map <string,
-                         double> &constantes, const set <string> &key_vords, 
-                         const set <string> &mathematic_functions, 
-                         Settings &settings) {
+TokenStream::TokenStream(const map <string, double> &constantes, const set <string> &key_vords, const set <string> &mathematic_functions, Settings &settings) {
 
     inicialiseStream(constantes, key_vords, mathematic_functions);
     Main_settings = &settings;
@@ -12,11 +9,9 @@ TokenStream::TokenStream(const map <string,
 
 Token TokenStream::get() {
 
-    Token buffer;
-
     if(Stream.size()) {
 
-        buffer = Stream.back();
+        Token buffer = Stream.back();
         Stream.pop_back();
 
         return buffer;
@@ -24,17 +19,7 @@ Token TokenStream::get() {
     }
     else {
 
-        if(Main_settings->get_mode_input() == Modes_input::console)
-            buffer.get(cin);
-        else if(Main_settings->get_mode_input() == Modes_input::file) {
-            file_for_input.open(Main_settings->get_name_file_to_input());
-            if(file_for_input.good())
-                buffer.get(file_for_input);
-            else {
-                Main_settings->set_mode_input(Modes_input::console);
-                throw exeption("Невозможно открыть файл! Ввод будет произволиться из консоли!");
-            }
-        }
+        Token buffer = buffer.get(cin);
 
         if (buffer.type == type_lexeme::word) return set_Token_type(buffer);
 

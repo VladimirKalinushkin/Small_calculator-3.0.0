@@ -17,8 +17,7 @@ public:
     void inicialise_Varriable(const string &s, const double &value);
     void set_Varriable(const string &s, const double &value);
 
-    Settings *Main_settings = NULL;
-    ifstream file_for_input;
+    Settings *Main_settings;
 
 private:
 
@@ -28,6 +27,8 @@ private:
     vector <Token> FunctionsNameStream;
     vector <Token> VarriablesStream;
 
+    ifstream file_for_input;
+    
     Token set_Token_type(const Token &buffer);
     void inicialiseStream(const map <string, double> &constantes, const set <string> &key_vords, const set <string> &mathematic_functions);
 
