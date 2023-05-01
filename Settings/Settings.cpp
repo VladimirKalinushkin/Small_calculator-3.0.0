@@ -6,6 +6,7 @@ Settings::Settings()
 {
 
     _mode_calculating = Modes_calculating::arabian;
+    _mode_input = Modes_input::console;
     
 }
 
