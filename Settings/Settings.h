@@ -19,6 +19,8 @@ class Settings
         void set_mode_input(Modes_input _mode) { _mode_input = _mode; }
         void set_mode_input(Modes_input _mode, string name) { _mode_input = _mode; _name_file_to_input = name; }
 
+        const char *name_file_to_error_log = "error_log.log";
+
     private:
 
         void set_Mode_calculating();

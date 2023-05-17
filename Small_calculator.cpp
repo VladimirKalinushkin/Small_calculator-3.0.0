@@ -12,9 +12,9 @@ int main() {
         main_menu(Main_settings, Stream);
 
     }
-    catch(const char* err){
+    catch(exception){
 
-        cerr << err << "Произошла неизвестная ошибка!";
+        cerr << "Произошла неизвестная ошибка!";
         system("pause");
 
     }
