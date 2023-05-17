@@ -37,6 +37,8 @@ void TokenStream::putback(Token buffer) {
 void TokenStream::clear() {
 
     Stream.clear();
+    if(Main_settings->get_mode_input() == Modes_input::console)
+        clear_istream(cin);
 
 }
 

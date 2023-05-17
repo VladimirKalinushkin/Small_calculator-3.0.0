@@ -54,16 +54,12 @@ void main_menu(Settings &Main_settings, TokenStream &Stream) {
         catch (TokenStream::exeption& ex) {
             ex.what();
             Stream.clear();
-            cin.clear();
-            cin.ignore(1000, '\n');
         }
         catch (MainException & ex)
         {
             ex.what();
             ex.put_to_file(file_to_log_error, Main_settings);
             Stream.clear();
-            cin.clear();
-            cin.ignore(1000, '\n');
         }
 
 

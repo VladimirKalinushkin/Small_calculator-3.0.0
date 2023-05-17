@@ -59,7 +59,7 @@ const set <string> mathematic_functions = {
     "ln", 
     "log", 
     "ceil", 
-    "fmod", 
+    "floor", 
     "fmod"
 
 };

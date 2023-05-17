@@ -9,6 +9,13 @@ void error(string msg)
     cerr << msg;
 }
 
+void clear_istream(istream &is){
+
+    cin.clear();
+    while(is.peek() != '\n')
+        is.get();
+}
+
 string get_word_from_string(istream &is)
 {
 

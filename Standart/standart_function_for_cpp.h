@@ -1,5 +1,6 @@
 
 void error(string msg);
+void clear_istream(istream &is);
 
 string get_word_from_string(istream &is);
 vector<string> SplitIntoWords(const string &text);
