@@ -4,19 +4,20 @@
 
 void set_new_varriable(TokenStream &Stream){
 
-    Token name = Stream.get();
-    if (name.type == type_lexeme::word) {
+    Token oper = Stream.get();
+    if (oper.type == type_lexeme::word) {
 
         if (Stream.get().type == '=') {
 
+            string name = oper.word;
             double value = third_order(Stream);
-            Stream.inicialise_Varriable(name.word, value);
+            Stream.inicialise_Varriable(name, value);
 
         }
-        else throw TokenStream::exeption("Пропущено '=' !");
+        else throw MainException("Пропущено '=' !");
 
     }
-    else throw TokenStream::exeption(" Имя переменной занято!");
+    else throw MainException(oper, " Имя переменной занято!");
 
 
 }

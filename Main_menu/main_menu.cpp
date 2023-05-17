@@ -57,6 +57,14 @@ void main_menu(Settings &Main_settings, TokenStream &Stream) {
             cin.clear();
             cin.ignore(1000, '\n');
         }
+        catch (MainException & ex)
+        {
+            ex.what();
+            ex.put_to_file(file_to_log_error, Main_settings);
+            Stream.clear();
+            cin.clear();
+            cin.ignore(1000, '\n');
+        }
 
 
     }
@@ -65,8 +73,9 @@ void main_menu(Settings &Main_settings, TokenStream &Stream) {
 
 void check_correct_end_input(TokenStream &Stream) {
     
-    if(Stream.get().type != print) {
-        throw TokenStream::exeption("Выражение неправильно завершено! Нет ';' !");
+    Token oper = Stream.get();
+    if(oper.type != print) {
+        throw MainException(oper, "Выражение неправильно завершено! Нет ';' !");
     };
 
 }

@@ -67,7 +67,7 @@ Roman_int primary_for_Roman_int(TokenStream &Stream)
 
             ret.set(oper.word);
             if(ret.empty())
-                throw TokenStream::exeption("Неправильный ввод!");
+                throw MainException(oper, "Неправильный ввод!");
 
             return ret;
             break;
@@ -85,7 +85,7 @@ Roman_int primary_for_Roman_int(TokenStream &Stream)
 
             oper = Stream.get();
             if (oper.type != ')')
-                throw TokenStream::exeption("нет ')' !");
+                throw MainException(oper, "нет ')' !");
 
             return result;
             break;
@@ -93,7 +93,7 @@ Roman_int primary_for_Roman_int(TokenStream &Stream)
         }
         default:{
 
-            throw TokenStream::exeption("Нет первичного выражения!");
+            throw MainException(oper, "Нет первичного выражения!");
             break;
         
         }

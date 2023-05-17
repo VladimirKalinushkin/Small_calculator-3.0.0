@@ -41,7 +41,7 @@ double second_order(TokenStream &Stream) {
             case '/':{
                 double second_value = first_order(Stream);
                 if (second_value == 0)
-                    throw TokenStream::exeption(" Деление на нуль!");
+                    throw MainException(" Деление на нуль!");
                 value /= second_value;
                 break;}
             default:{
@@ -102,7 +102,7 @@ double primary(TokenStream &Stream) {
             double result = third_order(Stream);
             oper = Stream.get();
             if (oper.type != ')')
-                throw TokenStream::exeption("нет ')'");
+                throw MainException(oper, "нет ')'");
             else return result;
             break;
 
@@ -113,13 +113,13 @@ double primary(TokenStream &Stream) {
             break;
         }
         case type_lexeme::word: {
-            throw TokenStream::exeption(" Переменная не инициализирована!");
+            throw MainException(oper, " Переменная не инициализирована!");
             break;}
         case type_lexeme::key_word: {
-            throw TokenStream::exeption(" Имя занято!");
+            throw MainException(oper, " Имя занято!");
             break;}
         default:{
-            throw TokenStream::exeption(" Нет первичного выражения!");
+            throw MainException(oper, " Нет первичного выражения!");
             break;}
     }
 
@@ -128,7 +128,8 @@ double primary(TokenStream &Stream) {
 
 double math_function(TokenStream &Stream) {
 
-    string name = Stream.get().word;
+    Token oper = Stream.get();
+    string name = oper.word;
 
     if (name == "fmod") return instead_of_reading_fmod_calculation(Stream);
 
@@ -147,16 +148,16 @@ double math_function(TokenStream &Stream) {
         if(result >= 0)
             return sqrt ( result );
         else
-            throw TokenStream::exeption(" Корень можно извлечь только из неотрицательного числа!");
+            throw MainException(" Корень можно извлечь только из неотрицательного числа!");
     
-    if (result < -1 & result > 1)
-        throw TokenStream::exeption("Для обратных тригонометрических функций должно испооьзоваться значение от -1 до 1!");
+    if (result < -1 || result > 1)
+        throw MainException("Для обратных тригонометрических функций должно испооьзоваться значение от -1 до 1!");
 
     if (name == "asin") return asin ( result );
     else if (name == "acos") return acos ( result );
     else if (name == "atan") return atan ( result );
 
-    throw TokenStream::exeption("Неизвестная функция, ошибка в логике программы!");
+    throw MainException(oper, "Неизвестная функция, ошибка в логике программы!");
 
 }
 
@@ -165,13 +166,13 @@ double instead_of_reading_fmod_calculation(TokenStream &Stream)
         
         char left_bracket = Stream.get().type;
         if(left_bracket != '(')
-            throw TokenStream::exeption("Нет открывающей скобки!");
+            throw MainException(left_bracket, "Нет открывающей скобки!");
 
         double left = primary(Stream);
 
         char punkt = Stream.get().type;
         if(punkt != ',')
-            throw TokenStream::exeption("Пропущена запятая!");
+            throw MainException(punkt, "Пропущена запятая!");
 
         double right = primary(Stream);
 
@@ -180,7 +181,7 @@ double instead_of_reading_fmod_calculation(TokenStream &Stream)
 
         char right_bracket = Stream.get().type;
         if(right_bracket != ')')
-            throw TokenStream::exeption("Нет закрывающей скобки!");
+            throw MainException(right_bracket, "Нет закрывающей скобки!");
 
         return fmod ( left, right );
 

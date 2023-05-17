@@ -33,7 +33,7 @@ void key_word_handler(TokenStream &Stream, const Token& key_word)
 
     if ( key_word.word == "var" ) 
         set_new_varriable(Stream);
-    if( key_word.word == "from_x" ) {
+    else if( key_word.word == "from_x" && false) {
 
         string name;
         cout << "Введите имя файла! " << promt;
@@ -42,7 +42,7 @@ void key_word_handler(TokenStream &Stream, const Token& key_word)
         Stream.Main_settings->set_mode_input(Modes_input::file, name);
     }
     else
-        throw TokenStream::exeption("Пока не реализована обработка этого ключевого слова!");
+        throw MainException(key_word, "Пока не реализована обработка этого ключевого слова!");
 
 }
 
