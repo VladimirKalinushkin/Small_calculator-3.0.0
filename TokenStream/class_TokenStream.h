@@ -28,6 +28,8 @@ private:
     vector <Token> VarriablesStream;
 
     ifstream file_for_input;
+
+    Token get_new_Token();
     
     Token set_Token_type(const Token &buffer);
     void inicialiseStream(const map <string, double> &constantes, const set <string> &key_vords, const set <string> &mathematic_functions);

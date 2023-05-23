@@ -3,27 +3,29 @@
 Token Token::get(istream &is)
 {
 
-    Token ret;
-    is >> ret.type;
+    is >> this->type;
 
-    if (Main_modes_simbols.count(ret.type))
-        return ret;
+    if (Main_modes_simbols.count(this->type))
+        return *this;
 
-    else if (isdigit(ret.type))
+    else if (isdigit(this->type))
     {
-        is.putback(ret.type);
-        is >> ret.value;
-        ret.type = type_lexeme::number;
-        return ret;
+        is.putback(this->type);
+        is >> this->value;
+        this->type = type_lexeme::number;
+        return *this;
     }
 
-    else if (isalpha(ret.type))
+    else if (isalpha(this->type))
     {
-        is.putback(ret.type);
-        ret.word = get_word_from_string(cin);
-        ret.type = type_lexeme::word;
-        return ret;
+        is.putback(this->type);
+        this->word = get_word_from_string(is);
+        this->type = type_lexeme::word;
+        return *this;
     }
+    
+    else if(!is && this->type == '\0')
+        throw TokenStream::exeption("Конец файла!");
 
     else
         throw TokenStream::exeption("Неправильный ввод!");

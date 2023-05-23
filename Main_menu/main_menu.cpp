@@ -24,33 +24,13 @@ void main_menu(Settings &Main_settings, TokenStream &Stream) {
         try {
 
             Token oper = Stream.get();
-
-            switch (oper.type) {
-
-                case exit_simbol: 
-                    return;
-                    break;
-
-                case help: 
-                    help_out();
-                    continue;
-                    break;
-
-                case settings:
-                    Main_settings.set_all_settings();
-                    continue;
-                    break;
-
-                default: 
-                    Stream.putback(oper);
-                    enable_mode(Main_settings, Stream);
-                    check_correct_end_input(Stream);
-                    break;
+            if(oper.type == exit_simbol)
+                return;
+            
+            Stream.putback(oper);
+            enable_Main_modes(Main_settings, Stream);
                 
-            }
-
         }
-
         catch (TokenStream::exeption& ex) {
             ex.what();
             Stream.clear();
@@ -67,6 +47,39 @@ void main_menu(Settings &Main_settings, TokenStream &Stream) {
     
 }
 
+void enable_Main_modes(Settings &Main_settings, TokenStream &Stream) {
+
+    Token oper = Stream.get();
+
+    if(oper.type == help) {
+        help_out();
+        return; 
+    }
+    else if(oper.type == settings){
+        Main_settings.set_all_settings();
+        return;
+    }
+    else if(oper.type == key_word && oper.word == "from_file")
+    {
+        set_filestream_to_input(Main_settings);
+        return;
+    }
+    else{ 
+        Stream.putback(oper);
+        enable_mode(Main_settings, Stream);
+        check_correct_end_input(Stream);
+    }
+}
+
+void set_filestream_to_input(Settings &Main_settings) {
+
+    string name;
+    cout << "Введите имя файла: " << promt;
+    cin >> name;
+
+    Main_settings.set_mode_input(Modes_input::file, name);
+}
+
 void check_correct_end_input(TokenStream &Stream) {
     
     Token oper = Stream.get();
@@ -74,4 +87,4 @@ void check_correct_end_input(TokenStream &Stream) {
         throw MainException(oper, "Выражение неправильно завершено! Нет ';' !");
     };
 
-}
+ }

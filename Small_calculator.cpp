@@ -5,7 +5,7 @@
 
 int main() {
 
-    welcome_words();
+    welcome_words(); 
 
     try {
 
@@ -19,6 +19,7 @@ int main() {
 
     }
      
-    return 0;
+    return 0; 
 	
 }
+ 

@@ -9,18 +9,19 @@ TokenStream::TokenStream(const map <string, double> &constantes, const set <stri
 
 Token TokenStream::get() {
 
+    Token buffer;
+
     if(Stream.size()) {
 
-        Token buffer = Stream.back();
+        buffer = Stream.back();
         Stream.pop_back();
-
         return buffer;
 
     }
     else {
 
-        Token buffer = buffer.get(cin);
-
+        buffer = get_new_Token();
+        
         if (buffer.type == type_lexeme::word) return set_Token_type(buffer);
 
         return buffer;
@@ -28,6 +29,42 @@ Token TokenStream::get() {
     }
 
 }
+Token TokenStream::get_new_Token() {
+
+    Token buffer;
+
+
+    if(Main_settings->get_mode_input() == Modes_input::console) {
+        buffer = buffer.get(cin);
+        return buffer;
+    }
+    
+    else if(Main_settings->get_mode_input() == Modes_input::file && !file_for_input.is_open())
+        file_for_input.open(Main_settings->get_name_file_to_input());
+
+    if( file_for_input.fail() || file_for_input.bad() ||
+        file_for_input.eof() || file_for_input.peek() == EOF) {
+            Main_settings->set_mode_input(Modes_input::console);
+            file_for_input.close();
+    }
+
+    if(file_for_input.fail())
+        throw TokenStream::exeption("Невозможно открыть файл!");
+    else if(file_for_input.bad())
+        throw TokenStream::exeption("Ошибка при чтении файла!");
+    else if(file_for_input.eof() || file_for_input.peek() == EOF)
+        throw TokenStream::exeption("Файл успешно считан!");
+
+    if(file_for_input) {
+        buffer = buffer.get(file_for_input);
+        return buffer;
+    }
+
+
+}
+
+
+
 void TokenStream::putback(Token buffer) {
 
     Stream.push_back(buffer);
@@ -37,9 +74,11 @@ void TokenStream::putback(Token buffer) {
 void TokenStream::clear() {
 
     Stream.clear();
-    if(Main_settings->get_mode_input() == Modes_input::console)
-        clear_istream(cin);
 
+    if(Main_settings->get_mode_input() == Modes_input::file)
+        clear_istream(file_for_input);
+    else
+        clear_istream(cin);
 }
 
 Token TokenStream::set_Token_type(const Token &buffer) {

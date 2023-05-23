@@ -9,11 +9,13 @@ void error(string msg)
     cerr << msg;
 }
 
-void clear_istream(istream &is){
+void clear_istream(istream &is)
+{
 
-    cin.clear();
-    while(is.peek() != '\n')
+    while (is.peek() != '\n' && is.peek() != '\0' && is.peek() != EOF)
         is.get();
+
+    is.clear();
 }
 
 string get_word_from_string(istream &is)
@@ -26,7 +28,7 @@ string get_word_from_string(istream &is)
         char c = is.get();
         if (isalpha(c) || c == '_')
             word += c;
-            
+
         else
         {
             is.putback(c);
