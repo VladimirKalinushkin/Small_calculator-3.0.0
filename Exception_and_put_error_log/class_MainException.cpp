@@ -25,10 +25,10 @@ void MainException::what()
          << '\n';
 }
 
-void MainException::put_to_file(ofstream &os, const Settings &MainSettings)
+void MainException::put_to_file(ofstream &os, const string &name)
 {
 
-    open_file_to_log(os, MainSettings);
+    os.open(name, ios::app);
 
     if (os.is_open())
         os << _value;

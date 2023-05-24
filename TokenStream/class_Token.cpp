@@ -24,7 +24,7 @@ Token Token::get(istream &is)
         return *this;
     }
     
-    else if(!is && this->type == '\0')
+    else if(!is && is.peek() == EOF)
         throw TokenStream::exeption("Конец файла!");
 
     else

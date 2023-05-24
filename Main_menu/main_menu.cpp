@@ -38,7 +38,7 @@ void main_menu(Settings &Main_settings, TokenStream &Stream) {
         catch (MainException & ex)
         {
             ex.what();
-            ex.put_to_file(file_to_log_error, Main_settings);
+            ex.put_to_file(file_to_log_error, Main_settings.name_file_to_error_log);
             Stream.clear();
         }
 
