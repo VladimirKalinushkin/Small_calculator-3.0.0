@@ -13,16 +13,20 @@ MainException::MainException(const Token &value, const char *message)
 void MainException::what()
 {
     cerr << this->_value._message
-         << '\n'
-         << "( "
-         << "Передано: "
-         << _value._value.type
-         << ' '
-         << _value._value.value
-         << ' '
-         << _value._value.word
-         << " )"
          << '\n';
+            
+
+    if(_value._value.type)
+        cerr    << "( "
+                << "Передано: "
+                << _value._value.type
+                << ' '
+                << _value._value.value
+                << ' '
+                << _value._value.word
+                << " )"
+                << '\n';
+
 }
 
 void MainException::put_to_file(ofstream &os, const string &name)

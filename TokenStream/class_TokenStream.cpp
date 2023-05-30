@@ -1,5 +1,9 @@
 
 
+#include "class_TokenStream.h"
+
+
+
 TokenStream::TokenStream(const map <string, double> &constantes, const set <string> &key_vords, const set <string> &mathematic_functions, Settings &settings) {
 
     inicialiseStream(constantes, key_vords, mathematic_functions);
@@ -35,7 +39,7 @@ Token TokenStream::get_new_Token() {
 
 
     if(Main_settings->get_mode_input() == Modes_input::console) {
-        buffer = buffer.get(cin);
+        buffer = read_Token(cin);
         return buffer;
     }
     
@@ -49,21 +53,28 @@ Token TokenStream::get_new_Token() {
     }
 
     if(file_for_input.fail())
-        throw TokenStream::exeption("Невозможно открыть файл!");
+        throw MainException("Невозможно открыть файл!");
     else if(file_for_input.bad())
-        throw TokenStream::exeption("Ошибка при чтении файла!");
+        throw MainException("Ошибка при чтении файла!");
     else if(file_for_input.eof() || file_for_input.peek() == EOF)
-        throw TokenStream::exeption("Файл успешно считан!");
+        throw MainException("Файл успешно считан!");
 
-    if(file_for_input) {
-        buffer = buffer.get(file_for_input);
-        return buffer;
+    try {
+        
+        if(file_for_input) {
+            buffer = read_Token(file_for_input);
+            return buffer;
+        }
+        
+    }
+    catch(const char* msg) {
+        file_for_input.close();
+        Main_settings->set_mode_input(Modes_input::console);
+        throw MainException(msg);
     }
 
 
 }
-
-
 
 void TokenStream::putback(Token buffer) {
 
@@ -130,7 +141,7 @@ void TokenStream::set_Varriable(const string &s, const double &value) {
         }
     }
 
-    throw exeption(("Неизвестная переменная!"));
+    throw MainException(("Неизвестная переменная!"));
 
 }
 
@@ -160,13 +171,37 @@ void TokenStream::inicialiseStream(const map <string, double> &constantes, const
 
 }
 
-TokenStream::exeption::exeption(char *msg) {
 
-    message = msg;
-}
-void TokenStream::exeption::what() {
+Token read_Token(istream &is) {
 
-    if (message)
-        cerr << message << "\n";
+    Token ret;
+
+    is >> ret.type;
+
+    if (Main_modes_simbols.count(ret.type))
+        return ret;
+
+    else if (isdigit(ret.type))
+    {
+        is.putback(ret.type);
+        is >> ret.value;
+        ret.type = type_lexeme::number;
+        return ret;
+    }
+
+    else if (isalpha(ret.type))
+    {
+        is.putback(ret.type);
+        ret.word = get_word_from_string(is);
+        ret.type = type_lexeme::word;
+        return ret;
+    }
+    
+    else if(!is && is.peek() == EOF) 
+        throw "Конец файла!";
+    
+    else
+        throw MainException(ret, "Неправильный ввод!");
+
 }
 

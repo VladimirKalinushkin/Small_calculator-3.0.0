@@ -34,15 +34,6 @@ private:
     Token set_Token_type(const Token &buffer);
     void inicialiseStream(const map <string, double> &constantes, const set <string> &key_vords, const set <string> &mathematic_functions);
 
-public:
-
-    class exeption : public exception {
-        public:
-            exeption(char *msg);
-            void what(); 
-        private:
-            char *message = NULL;
-    };
 };
 
-
+Token read_Token(istream &is);

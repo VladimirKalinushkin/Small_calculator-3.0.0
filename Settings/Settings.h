@@ -25,6 +25,7 @@ class Settings
 
         void set_Mode_calculating();
         Modes_calculating get_Mode_calculating();
+        
         class exeption : public exception
         {
         public:

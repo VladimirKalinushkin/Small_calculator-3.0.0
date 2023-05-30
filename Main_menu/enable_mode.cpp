@@ -14,7 +14,7 @@ void enable_mode(Settings & Main_settings, TokenStream &Stream)
             expression_handler_for_Roman_int(Stream);
             break;
         default:
-            throw TokenStream::exeption("Не установлен режим работы!");
+            throw MainException("Не установлен режим работы!");
             break;
     }
 

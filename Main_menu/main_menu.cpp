@@ -31,10 +31,6 @@ void main_menu(Settings &Main_settings, TokenStream &Stream) {
             enable_Main_modes(Main_settings, Stream);
                 
         }
-        catch (TokenStream::exeption& ex) {
-            ex.what();
-            Stream.clear();
-        }
         catch (MainException & ex)
         {
             ex.what();
