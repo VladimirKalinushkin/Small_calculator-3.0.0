@@ -4,10 +4,16 @@
 
 
 
-TokenStream::TokenStream(const map <string, double> &constantes, const set <string> &key_vords, const set <string> &mathematic_functions, Settings &settings) {
+TokenStream::TokenStream(   const map <string, 
+                            double> &constantes, 
+                            const set <string> &key_vords, 
+                            const set <string> &mathematic_functions, 
+                            Settings &settings,
+                            ifstream &file_for_input) {
 
     inicialiseStream(constantes, key_vords, mathematic_functions);
     Main_settings = &settings;
+    _file_for_input = &file_for_input;
 
 }
 
@@ -43,32 +49,32 @@ Token TokenStream::get_new_Token() {
         return buffer;
     }
     
-    else if(Main_settings->get_mode_input() == Modes_input::file && !file_for_input.is_open())
-        file_for_input.open(Main_settings->get_name_file_to_input());
+    else if(Main_settings->get_mode_input() == Modes_input::file && !_file_for_input->is_open())
+        _file_for_input->open(Main_settings->get_name_file_to_input());
 
-    if( file_for_input.fail() || file_for_input.bad() ||
-        file_for_input.eof() || file_for_input.peek() == EOF) {
+    if( _file_for_input->fail() || _file_for_input->bad() ||
+        _file_for_input->eof() || _file_for_input->peek() == EOF) {
             Main_settings->set_mode_input(Modes_input::console);
-            file_for_input.close();
+            _file_for_input->close();
     }
 
-    if(file_for_input.fail())
+    if(_file_for_input->fail())
         throw MainException("Невозможно открыть файл!");
-    else if(file_for_input.bad())
+    else if(_file_for_input->bad())
         throw MainException("Ошибка при чтении файла!");
-    else if(file_for_input.eof() || file_for_input.peek() == EOF)
+    else if(_file_for_input->eof() || _file_for_input->peek() == EOF)
         throw MainException("Файл успешно считан!");
 
     try {
         
-        if(file_for_input) {
-            buffer = read_Token(file_for_input);
+        if(*_file_for_input) {
+            buffer = read_Token(*_file_for_input);
             return buffer;
         }
         
     }
     catch(const char* msg) {
-        file_for_input.close();
+        _file_for_input->close();
         Main_settings->set_mode_input(Modes_input::console);
         throw MainException(msg);
     }
@@ -87,7 +93,7 @@ void TokenStream::clear() {
     Stream.clear();
 
     if(Main_settings->get_mode_input() == Modes_input::file)
-        clear_istream(file_for_input);
+        clear_istream(*_file_for_input);
     else
         clear_istream(cin);
 }

@@ -7,7 +7,9 @@ public:
                  double> &constantes,
                  const set <string> &key_vords,
                  const set <string> &mathematic_functions,
-                 Settings &settings);
+                 Settings &settings,
+                 ifstream &file_for_input
+                 );
 
     Token get();
     void putback(Token buffer);
@@ -18,6 +20,7 @@ public:
     void set_Varriable(const string &s, const double &value);
 
     Settings *Main_settings;
+    ifstream *_file_for_input;
 
 private:
 
@@ -26,8 +29,6 @@ private:
     vector <Token> KeyWordsStream;
     vector <Token> FunctionsNameStream;
     vector <Token> VarriablesStream;
-
-    ifstream file_for_input;
 
     Token get_new_Token();
     
