@@ -20,8 +20,12 @@ void welcome_words() {
 void main_menu(Settings &Main_settings, TokenStream &Stream) {
 
     while (cin) {
-        cout << promt;
+
         try {
+
+            if( Main_settings.get_mode_input() == Modes_input::console || 
+                Main_settings.get_mode_output_file() == Modes_output_with_file::on_to_console_and_file )
+                cout << promt;
 
             Token oper = Stream.get();
             if(oper.type == exit_simbol)

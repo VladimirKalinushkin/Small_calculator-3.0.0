@@ -41,10 +41,40 @@ void key_word_handler(TokenStream &Stream, const Token& key_word)
 void out_off_math_expression_resuilt(TokenStream &Stream, const double &result)
 {
 
-    cout
-        << print_result
-        << result
-        << '\n';
+    if( 
 
+        Main_settings.get_mode_input() == Modes_input::file ||
+        Main_settings.get_mode_output() == Modes_output::to_file ||
+        Main_settings.get_mode_output() == Modes_output::to_console_and_file
+
+    ) {
+
+        ofstream ofs("output.txt", ios::app);
+        Chrono::Date _now;
+        Chrono::Time _now_tm;
+        ofs << '\t' << _now << ' ' << _now_tm << ' '<< " - " << result << '\n';
+        ofs.close();
+
+    }
+
+    if( 
+
+        Main_settings.get_mode_input() == Modes_input::console && (
+            Main_settings.get_mode_output() == Modes_output::to_console ||
+            Main_settings.get_mode_output() == Modes_output::to_console_and_file
+        ) ||
+        (
+            Main_settings.get_mode_input() == Modes_input::file &&
+            Main_settings.get_mode_output_file() == Modes_output_with_file::on_to_console_and_file
+        )
+
+    ) {
+
+        cout
+            << print_result
+            << result
+            << '\n';
+
+    }
 }
 

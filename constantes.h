@@ -70,9 +70,22 @@ enum Modes_calculating {
     roman = 'r'
 
 };
-
 enum Modes_input {
 
     console = 'c',
     file = 'f'
+
+};
+enum Modes_output {
+
+    to_console = 'c',
+    to_file = 'f',
+    to_console_and_file = 'a'
+
+};
+enum Modes_output_with_file {
+
+    on_to_file = 'f',
+    on_to_console_and_file = 'a'
+
 };

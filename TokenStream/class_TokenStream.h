@@ -3,13 +3,13 @@ class TokenStream {
 
 public:
 
-    TokenStream(const map <string,
+    TokenStream( const map <string,
                  double> &constantes,
                  const set <string> &key_vords,
                  const set <string> &mathematic_functions,
                  Settings &settings,
                  ifstream &file_for_input
-                 );
+                );
 
     Token get();
     void putback(Token buffer);
