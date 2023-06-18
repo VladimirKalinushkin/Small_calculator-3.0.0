@@ -1,7 +1,7 @@
 
 #include "expression_handler.h"
 
-void expression_handler(TokenStream &Stream){
+void expression_handler(Settings &Main_Settings, TokenStream &Stream){
 
     Token oper = Stream.get();
     if(oper.type == type_lexeme::key_word)
@@ -24,7 +24,7 @@ void expression_handler(TokenStream &Stream){
 
     Stream.putback(oper);
     double result = third_order(Stream);
-    out_off_math_expression_resuilt(Stream, result);
+    out_off_math_expression_resuilt(Main_settings, result);
 
 }
 
@@ -38,7 +38,7 @@ void key_word_handler(TokenStream &Stream, const Token& key_word)
 
 }
 
-void out_off_math_expression_resuilt(TokenStream &Stream, const double &result)
+void out_off_math_expression_resuilt(Settings & Main_Settings, const double &result)
 {
 
     if( 
@@ -49,7 +49,7 @@ void out_off_math_expression_resuilt(TokenStream &Stream, const double &result)
 
     ) {
 
-        ofstream ofs("output.txt", ios::app);
+        ofstream ofs(Main_Settings.get_name_file_to_output(), ios::app);
         Chrono::Date _now;
         Chrono::Time _now_tm;
         ofs << '\t' << _now << ' ' << _now_tm << ' '<< " - " << result << '\n';

@@ -9,6 +9,7 @@ Settings::Settings()
     _mode_input = Modes_input::console;
     _mode_output =  Modes_output ::to_console;
     _mode_output_with_file = Modes_output_with_file::on_to_console_and_file;
+    _name_file_to_output = "output.txt";
     
 }
 
@@ -19,6 +20,7 @@ void Settings::main_menu_to_set_all_settings()
         cout << "Для настройки режима вычислений введите c,"
              << " для настройки вывода файла - o,"
              << " для режима вывода при вводе из файла - f,"
+             << " чтобы указать имя файла для вывода - n"
              << " для выхода - q: " 
              << '\n' << promt;
              
@@ -33,6 +35,9 @@ void Settings::main_menu_to_set_all_settings()
 
         else if(ch == 'f')
             set_mode_output_with_file();
+
+        else if(ch == 'n')
+            set_name_file_to_output();
 
         else if(ch == 'q')
             return;
@@ -116,5 +121,16 @@ void Settings::set_mode_output_with_file() {
         throw MainException("Неправильный ввод!\n");
 
     };
+
+}
+
+void Settings::set_name_file_to_output() {
+
+    string name;
+    cout << "Введите имя файла: \n" << promt;
+    cin >> name;
+
+    _name_file_to_output = name;
+
 
 }

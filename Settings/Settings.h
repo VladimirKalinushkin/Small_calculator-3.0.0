@@ -15,6 +15,8 @@ class Settings
         Modes_input get_mode_input() { return _mode_input; }
         string get_name_file_to_input() { return _name_file_to_input; }
 
+        string get_name_file_to_output() { return _name_file_to_output; }
+
         void set_mode_input(Modes_input _mode) { _mode_input = _mode; }
         void set_mode_input(Modes_input _mode, string name) { _mode_input = _mode; _name_file_to_input = name; }
         const char *name_file_to_error_log = "error_log.log";
@@ -28,8 +30,11 @@ class Settings
         Modes_input _mode_input;
         string _name_file_to_input;
 
+        string _name_file_to_output;
+
         void set_mode_calculating();
         void set_mode_output();
         void set_mode_output_with_file();
+        void set_name_file_to_output();
 
 };
