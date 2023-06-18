@@ -24,7 +24,7 @@ void main_menu(Settings &Main_settings, TokenStream &Stream) {
         try {
 
             if( Main_settings.get_mode_input() == Modes_input::console || 
-                Main_settings.get_mode_output_file() == Modes_output_with_file::on_to_console_and_file )
+                Main_settings.get_mode_output_with_file() == Modes_output_with_file::on_to_console_and_file )
                 cout << promt;
 
             Token oper = Stream.get();
@@ -56,7 +56,7 @@ void enable_Main_modes(Settings &Main_settings, TokenStream &Stream) {
         return; 
     }
     else if(oper.type == settings){
-        Main_settings.set_all_settings();
+        Main_settings.main_menu_to_set_all_settings();
         return;
     }
     else if(oper.type == key_word && oper.word == "from_file")

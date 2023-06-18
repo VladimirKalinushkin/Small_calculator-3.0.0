@@ -5,7 +5,7 @@
 void enable_mode(Settings & Main_settings, TokenStream &Stream)
 {
 
-    switch(Main_settings.get_mode())
+    switch(Main_settings.get_mode_calculating())
     {
         case Modes_calculating::arabian:
             expression_handler(Stream);

@@ -65,7 +65,7 @@ void out_off_math_expression_resuilt(TokenStream &Stream, const double &result)
         ) ||
         (
             Main_settings.get_mode_input() == Modes_input::file &&
-            Main_settings.get_mode_output_file() == Modes_output_with_file::on_to_console_and_file
+            Main_settings.get_mode_output_with_file() == Modes_output_with_file::on_to_console_and_file
         )
 
     ) {
