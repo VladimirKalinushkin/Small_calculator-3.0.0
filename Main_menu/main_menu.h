@@ -1,8 +1,6 @@
 
-#include "enable_mode.cpp"
-
-
-void welcome_words();
+#include "help.cpp"
+#include "welcome_words.cpp"
 
 void main_menu(Settings &Main_settings,  TokenStream &Stream);
 void enable_Main_modes(Settings &Main_settings, TokenStream &Stream);

@@ -1,4 +1,5 @@
 
+#pragma once
 #include "Settings.h"
 
 
@@ -13,16 +14,17 @@ Settings::Settings()
     
 }
 
-void Settings::main_menu_to_set_all_settings()
-{
+void Settings::main_menu_to_set_all_settings() {
+    
     while (cin) {
 
-        cout << "Для настройки режима вычислений введите c,"
-             << " для настройки вывода файла - o,"
-             << " для режима вывода при вводе из файла - f,"
-             << " чтобы указать имя файла для вывода - n"
-             << " для выхода - q: " 
-             << '\n' << promt;
+        cout << "Для настройки режима вычислений введите c, "
+             << "для настройки вывода файла - o, "
+             << "для режима вывода при вводе из файла - f, "
+             << "чтобы указать имя файла для вывода - n, "
+             << "для выхода - e: "
+             << '\n'
+             << promt;
              
         char ch;
         cin >> ch;
@@ -39,13 +41,12 @@ void Settings::main_menu_to_set_all_settings()
         else if(ch == 'n')
             set_name_file_to_output();
 
-        else if(ch == 'q')
+        else if(ch == 'e')
             return;
 
         else {
             cout << "Неправильный ввод!\n";
             return;
-
         }
 
     }

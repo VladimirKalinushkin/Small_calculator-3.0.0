@@ -1,6 +1,24 @@
 
+#pragma once
 #include "calculation_for_Roman_int.h"
 
+
+void expression_handler_for_Roman_int(Settings &Main_settings, TokenStream &Stream)
+{
+
+    try
+    {
+        Roman_int result = third_order_for_Roman_int(Stream);
+
+        out_math_expression_s_result(Main_settings, Stream, result);
+
+    }
+    catch(Roman_int::exeption ex)
+    {
+        ex.what();
+    }
+
+}
 
 Roman_int third_order_for_Roman_int(TokenStream &Stream)
 {

@@ -1,4 +1,5 @@
 
+#pragma once
 #include "calculation.h"
 
 double third_order(TokenStream &Stream) {

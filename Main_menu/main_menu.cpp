@@ -1,21 +1,7 @@
 
+#pragma once
 #include "main_menu.h"
 
-
-
-void welcome_words() {
-    cout
-        << "Введите выражение, завершите его "
-        << ';'
-        << " . Для выхода введите "
-        << exit_simbol
-        << ", для прочих вопросов введите "
-        << help
-        << ", для настроек - "
-        << settings
-        << '\n'
-        << '\n';
-}
 
 void main_menu(Settings &Main_settings, TokenStream &Stream) {
 
@@ -31,7 +17,7 @@ void main_menu(Settings &Main_settings, TokenStream &Stream) {
             enable_Main_modes(Main_settings, Stream);
                 
         }
-        catch (MainException & ex)
+        catch (MainException &ex)
         {
             errors_handler(ex, Stream);
         }
@@ -85,7 +71,7 @@ bool check_exit_simbol(TokenStream &Stream) {
 
 }
 
-void errors_handler(MainException &ex, TokenStream & Stream) {
+void errors_handler(MainException &ex, TokenStream &Stream) {
 
     ex.what();
     ex.put_to_file(file_to_log_error, Main_settings.name_file_to_error_log);

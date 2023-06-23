@@ -1,6 +1,6 @@
 
+#pragma once
 #include "Small_calculator.h"
-
 
 
 int main() {

@@ -8,7 +8,8 @@ public:
                  const set <string> &key_vords,
                  const set <string> &mathematic_functions,
                  Settings &settings,
-                 ifstream &file_for_input
+                 ifstream &file_to_input,
+                 ofstream &file_for_output
                 );
 
     Token get();
@@ -21,6 +22,7 @@ public:
 
     Settings *Main_settings;
     ifstream *_file_for_input;
+    ofstream *_file_to_output;
 
 private:
 

@@ -1,4 +1,5 @@
 
+#pragma once
 #include "class_MainException.h"
 
 MainException::MainException(const char *message)

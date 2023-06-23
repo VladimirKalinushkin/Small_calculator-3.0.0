@@ -1,4 +1,5 @@
 
+#pragma once
 #include "enable_mode.h"
 
 
@@ -11,7 +12,7 @@ void enable_mode(Settings &Main_settings, TokenStream &Stream)
             expression_handler(Main_settings, Stream);
             break;
         case Modes_calculating::roman:
-            expression_handler_for_Roman_int(Stream);
+            expression_handler_for_Roman_int(Main_settings, Stream);
             break;
         default:
             throw MainException("Не установлен режим работы!");

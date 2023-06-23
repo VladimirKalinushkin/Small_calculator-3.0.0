@@ -1,3 +1,5 @@
+
+#pragma once
 #include "standart_function_for_cpp.h"
 
 void error(string msg)
