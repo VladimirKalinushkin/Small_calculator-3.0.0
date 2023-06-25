@@ -25,7 +25,7 @@ void expression_handler(Settings &Main_Settings, TokenStream &Stream){
 
     Stream.putback(oper);
     double result = third_order(Stream);
-    out_math_expression_s_result(Main_settings, Stream, result);
+    out_math_expression_s_result(Main_settings, result);
 
 }
 

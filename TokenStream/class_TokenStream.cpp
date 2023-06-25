@@ -9,13 +9,11 @@ TokenStream::TokenStream(   const map <string,
                             const set <string> &key_vords, 
                             const set <string> &mathematic_functions, 
                             Settings &settings,
-                            ifstream &file_for_input,
-                            ofstream &file_to_output) {
+                            ifstream &file_for_input) {
 
     inicialiseStream(constantes, key_vords, mathematic_functions);
     Main_settings = &settings;
     _file_for_input = &file_for_input;
-    _file_to_output = &file_to_output;
 
 }
 

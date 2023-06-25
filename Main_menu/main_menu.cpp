@@ -25,7 +25,7 @@ void main_menu(Settings &Main_settings, TokenStream &Stream) {
 
     }
     
-}
+} 
 
 void enable_Main_modes(Settings &Main_settings, TokenStream &Stream) {
     
@@ -74,7 +74,7 @@ bool check_exit_simbol(TokenStream &Stream) {
 void errors_handler(MainException &ex, TokenStream &Stream) {
 
     ex.what();
-    ex.put_to_file(file_to_log_error, Main_settings.name_file_to_error_log);
+    ex.put_to_file(Main_settings.name_file_to_error_log);
     Stream.clear();
     
 }

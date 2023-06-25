@@ -3,18 +3,21 @@
 #include "output_math_expression_s_resuilt.h"
 
 
-void out_math_expression_s_result(Settings & Main_Settings, TokenStream &Stream, const double &result) {
+void out_math_expression_s_result(Settings & Main_Settings, const double &result) {
 
     if( output_is_to_file(Main_Settings) )
-        output_result_to_file(*Stream._file_to_output, Main_Settings.get_name_file_to_output(), result); 
+        output_result_to_file(Main_Settings.get_name_file_to_output(), result); 
 
     if(output_is_to_console(Main_settings) ) 
         output_resuilt_to_console(result);
 
 }
-void output_result_to_file(ofstream &file_to_output, string name, const double &result) {
+void output_result_to_file(string name, const double &result) {
 
-    file_to_output.open(name, ios::app);
+    ofstream file_to_output(name, ios::app);
+
+    if(!file_to_output)
+        cerr <<"Невозможно открыть файл для вывода!\n";
 
     Chrono::Date _now;
     Chrono::Time _now_time;
@@ -33,18 +36,21 @@ void output_resuilt_to_console(const double &result) {
 
 }
 
-void out_math_expression_s_result(Settings & Main_Settings, TokenStream &Stream, const Roman_int &result) {
+void out_math_expression_s_result(Settings & Main_Settings, const Roman_int &result) {
 
     if( output_is_to_file(Main_Settings) )
-        output_result_to_file(*Stream._file_to_output, Main_Settings.get_name_file_to_output(), result); 
+        output_result_to_file(Main_Settings.get_name_file_to_output(), result); 
 
     if(output_is_to_console(Main_settings) ) 
         output_resuilt_to_console(result);
 
 }
-void output_result_to_file(ofstream &file_to_output, string name, const Roman_int &result) {
+void output_result_to_file(string name, const Roman_int &result) {
 
-    file_to_output.open(name, ios::app);
+    ofstream file_to_output(name, ios::app);
+
+    if(!file_to_output)
+        cerr <<"Невозможно открыть файл для вывода!\n";
 
     Chrono::Date _now;
     Chrono::Time _now_time;
