@@ -30,17 +30,11 @@ void MainException::what()
 
 }
 
-void MainException::put_to_file(const string &name)
+void MainException::put_to_file(ofstream &file_to_output_log)
 {
 
-    ofstream file_to_output_log(name, ios::app);
+    file_to_output_log << _value;
 
-    if (file_to_output_log.is_open())
-        file_to_output_log << _value;
-    else
-        cerr << "Не удалось открыть файл вывода лога! \n";
-
-    file_to_output_log.close();
 }
 
 ostream &operator<<(ostream &os, Token t)

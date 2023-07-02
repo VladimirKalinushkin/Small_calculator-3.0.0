@@ -32,7 +32,8 @@ Token TokenStream::get() {
 
         buffer = get_new_Token();
         
-        if (buffer.type == type_lexeme::word) return set_Token_type(buffer);
+        if (buffer.type == type_lexeme::word)
+            return set_Token_type(buffer);
 
         return buffer;
 
@@ -41,44 +42,34 @@ Token TokenStream::get() {
 }
 Token TokenStream::get_new_Token() {
 
-    Token buffer;
-
-
-    if(Main_settings->get_mode_input() == Modes_input::console) {
-        buffer = read_Token(cin);
-        return buffer;
-    }
-    
-    else if(Main_settings->get_mode_input() == Modes_input::file && !_file_for_input->is_open())
-        _file_for_input->open(Main_settings->get_name_file_to_input());
-
-    if( _file_for_input->fail() || _file_for_input->bad() ||
-        _file_for_input->eof() || _file_for_input->peek() == EOF) {
-            Main_settings->set_mode_input(Modes_input::console);
-            _file_for_input->close();
-    }
-
-    if(_file_for_input->fail())
-        throw MainException("Невозможно открыть файл!");
-    else if(_file_for_input->bad())
-        throw MainException("Ошибка при чтении файла!");
-    else if(_file_for_input->eof() || _file_for_input->peek() == EOF)
-        throw MainException("Файл успешно считан!");
-
     try {
-        
-        if(*_file_for_input) {
-            buffer = read_Token(*_file_for_input);
-            return buffer;
+
+        if(Main_settings->get_mode_input() == Modes_input::console)
+            return read_Token(cin);
+                
+        else if(Main_settings->get_mode_input() == Modes_input::file)  {
+
+            open_or_close_file_for_input(*_file_for_input, *Main_settings);
+
+            if(*_file_for_input) 
+                return read_Token(*_file_for_input);
+
         }
-        
+                    
+    }
+    catch(MainException & ex) {
+
+        Main_settings->set_mode_input(Modes_input::console);
+        throw ex;
+    
     }
     catch(const char* msg) {
+
         _file_for_input->close();
         Main_settings->set_mode_input(Modes_input::console);
-        throw MainException(msg);
+        throw msg;
+    
     }
-
 
 }
 
@@ -181,27 +172,28 @@ void TokenStream::inicialiseStream(const map <string, double> &constantes, const
 Token read_Token(istream &is) {
 
     Token ret;
-
     is >> ret.type;
 
-    if (Main_modes_simbols.count(ret.type))
-        return ret;
+    if (isdigit(ret.type)) {
 
-    else if (isdigit(ret.type))
-    {
         is.putback(ret.type);
         is >> ret.value;
         ret.type = type_lexeme::number;
         return ret;
+    
     }
 
-    else if (isalpha(ret.type))
-    {
+    else if ( isalpha(ret.type) && ( isalpha( is.peek()) || !Main_modes_simbols.count(ret.type) ) ) {
+
         is.putback(ret.type);
         ret.word = get_word_from_string(is);
         ret.type = type_lexeme::word;
         return ret;
+    
     }
+
+    else if (Main_modes_simbols.count(ret.type) && (!isalpha(ret.type) || ( isalpha(ret.type) && !isalpha(is.peek() ) ) ) )
+        return ret;
     
     else if(!is && is.peek() == EOF) 
         throw "Конец файла!";
@@ -209,5 +201,33 @@ Token read_Token(istream &is) {
     else
         throw MainException(ret, "Неправильный ввод!");
 
+}
+
+void open_or_close_file_for_input(ifstream &_file_for_input, Settings &Main_settings) {
+
+    if(!_file_for_input.is_open())
+        _file_for_input.open(Main_settings.get_name_file_to_input());
+
+    close_file_input_with_error(_file_for_input, Main_settings);
+
+    throw_new_Main_exception_with_error_input_from_file(_file_for_input);
+
+}
+void throw_new_Main_exception_with_error_input_from_file(ifstream &_file_for_input) {
+
+    if(_file_for_input.fail())
+        throw MainException("Невозможно открыть файл!");
+    else if(_file_for_input.bad())
+        throw MainException("Ошибка при чтении файла!");
+    else if(_file_for_input.eof() || _file_for_input.peek() == EOF)
+        throw MainException("Файл успешно считан!");
+
+}
+void close_file_input_with_error(ifstream &_file_for_input, Settings &Main_settings) {
+
+    if( _file_for_input.fail() || _file_for_input.bad() ||
+        _file_for_input.eof() || _file_for_input.peek() == EOF)
+            _file_for_input.close();
+    
 }
 

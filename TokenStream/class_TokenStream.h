@@ -38,3 +38,7 @@ private:
 };
 
 Token read_Token(istream &is);
+
+void open_or_close_file_for_input(ifstream &_file_for_input, Settings &Main_settings);
+void throw_new_Main_exception_with_error_input_from_file(ifstream &_file_for_input);
+void close_file_input_with_error(ifstream &_file_for_input, Settings &Main_settings);

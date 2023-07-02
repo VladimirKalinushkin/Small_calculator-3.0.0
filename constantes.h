@@ -4,7 +4,7 @@ const char* promt = ">> ";
 
 const char exit_simbol = 'q';
 const char help = '?';
-const char settings = '>';
+const char settings = 's';
 const char print = ';';
 const char equality = '=';
 const set <char> Main_modes_simbols = {

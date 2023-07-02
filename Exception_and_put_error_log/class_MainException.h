@@ -8,7 +8,7 @@ public:
     MainException(const Token &value, const char *message);
 
     void what();
-    void put_to_file(const string &name);
+    void put_to_file(ofstream &file_to_output_log);
 
 private:
     Packet_exception_output _value;
