@@ -225,7 +225,7 @@ void Delay_indicator(int second)
 {
     static vector<char> delay_indicator = {'|', '/', '-', '\\'};
 
-    int delay_min_mlscnds = 125;
+    int delay_min_mlscnds = 50;
     int numb_iteratns = second * (1000 / (delay_min_mlscnds * delay_indicator.size()));
 
     for (int i = 0; i < numb_iteratns; i++)
@@ -249,7 +249,7 @@ void Delay_indicator(bool &end)
         {
             cout << delay_indicator[i];
             cout.flush();
-            this_thread::sleep_for(chrono::milliseconds(125));
+            this_thread::sleep_for(chrono::milliseconds(50));
             cout << "\b";
         }
     }

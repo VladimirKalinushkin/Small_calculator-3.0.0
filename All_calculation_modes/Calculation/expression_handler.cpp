@@ -26,8 +26,13 @@ void expression_handler(Settings &Main_Settings, TokenStream &Stream){
 
     Stream.putback(oper);
 
-    double result = calculating_or_get_delay(Main_Settings, Stream);
-    out_math_expression_s_result(Main_settings, result);
+    if(Main_settings.get_mode_input() == Modes_input::file && Stream._file_for_input) {
+        double result = get_delay_with_calculating_from_file(Stream);
+        out_math_expression_s_result(Main_settings, result);
+
+    }
+    else
+        out_math_expression_s_result(Main_settings, third_order(Stream));
 
 }
 
@@ -41,23 +46,36 @@ void key_word_handler(TokenStream &Stream, const Token& key_word)
 
 }
 
-double calculating_or_get_delay(Settings &Main_Settings, TokenStream &Stream) {
+double get_delay_with_calculating_from_file(TokenStream &Stream) {
 
-    bool end = false;
+    bool &end = Graphick_delay_must_be_end = true;
+    if(end == true)
+        end = false;
+    else
+        return third_order(Stream);
+        
+    MainException ex; bool is_error = false;
     double result;
 
-    if(Main_settings.get_mode_input() == Modes_input::file && Stream._file_for_input)
-    {  
-        thread th([&end]()
-            { Delay_indicator(end);});
+    thread th([&ex, &is_error, &end, &Stream, &result]() { 
+        try {
 
-        result = third_order(Stream);
+            result = third_order(Stream);
 
+        }
+        catch(MainException &_ex) {
+            is_error = true;
+            ex = _ex;
+        }
+        
         end = true;
-        th.join();
-    }  
-    else            
-        result = third_order(Stream);
+    } );
+
+    th.detach();
+    Delay_indicator(end);
+
+    if(is_error)
+        throw MainException(ex);
 
     return result;
 

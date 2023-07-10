@@ -89,3 +89,5 @@ enum Modes_output_with_file {
     on_to_console_and_file = 'a'
 
 };
+
+static bool Graphick_delay_must_be_end = true;
