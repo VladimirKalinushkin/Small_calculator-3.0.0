@@ -8,7 +8,7 @@ void expression_handler_for_Roman_int(Settings &Main_settings, TokenStream &Stre
 
     try
     {
-        Roman_int result = third_order_for_Roman_int(Stream);
+        Roman_int result = calculating_or_get_delay_for_Roman_int(Main_settings, Stream);
 
         out_math_expression_s_result(Main_settings, result);
 
@@ -17,6 +17,28 @@ void expression_handler_for_Roman_int(Settings &Main_settings, TokenStream &Stre
     {
         ex.what();
     }
+
+}
+
+Roman_int calculating_or_get_delay_for_Roman_int(Settings &Main_Settings, TokenStream &Stream) {
+
+    bool end = false;
+    Roman_int result;
+
+    if(Main_settings.get_mode_input() == Modes_input::file && Stream._file_for_input)
+    {  
+        thread th([&end]()
+            { Delay_indicator(end);});
+
+        result = third_order_for_Roman_int(Stream);
+
+        end = true;
+        th.join();
+    }  
+    else            
+        result = third_order_for_Roman_int(Stream);
+
+    return result;
 
 }
 

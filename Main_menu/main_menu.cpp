@@ -5,6 +5,8 @@
 
 void main_menu(Settings &Main_settings, TokenStream &Stream) {
 
+    bool end = true;
+
     while (cin) {
 
         try {
@@ -15,7 +17,6 @@ void main_menu(Settings &Main_settings, TokenStream &Stream) {
                 return;
 
             enable_Main_modes(Main_settings, Stream);
-
         }
         catch (MainException &ex) {
             errors_handler(ex, Main_settings);
@@ -38,6 +39,7 @@ void out_promt(Settings &Main_settings) {
         cout << promt;
 
 }
+
 bool check_exit_simbol(TokenStream &Stream) {
 
     Token oper = Stream.get();

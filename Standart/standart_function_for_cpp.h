@@ -20,4 +20,7 @@ void swap(string &first_op, string &second_op);
 void self_sort_v_hm(vector<string> &some_vector);
 void self_sort_v_hm(vector<int> &some_vector);
 
+void Delay_indicator(int second);
+void Delay_indicator(bool &end);
+
 //

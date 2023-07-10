@@ -221,4 +221,38 @@ void self_sort_v_hm(vector<int> &some_vector)
     }
 }
 
+void Delay_indicator(int second)
+{
+    static vector<char> delay_indicator = {'|', '/', '-', '\\'};
+
+    int delay_min_mlscnds = 125;
+    int numb_iteratns = second * (1000 / (delay_min_mlscnds * delay_indicator.size()));
+
+    for (int i = 0; i < numb_iteratns; i++)
+    {
+        for (int i = 0; i < delay_indicator.size(); i++)
+        {
+            cout << delay_indicator[i];
+            cout.flush();
+            this_thread::sleep_for(chrono::milliseconds(delay_min_mlscnds));
+            cout << "\b";
+        }
+    }
+}
+void Delay_indicator(bool &end)
+{
+    static vector<char> delay_indicator = {'|', '/', '-', '\\'};
+
+    while (!end)
+    {
+        for (int i = 0; i < delay_indicator.size(); i++)
+        {
+            cout << delay_indicator[i];
+            cout.flush();
+            this_thread::sleep_for(chrono::milliseconds(125));
+            cout << "\b";
+        }
+    }
+}
+
 //

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <thread>
 
 #include <wchar.h>
 #include <string>
