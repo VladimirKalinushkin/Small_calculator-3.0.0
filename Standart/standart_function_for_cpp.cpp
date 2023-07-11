@@ -245,7 +245,7 @@ void Delay_indicator(bool &end)
 
     while (!end)
     {
-        for (int i = 0; i < delay_indicator.size(); i++)
+        for (int i = 0; i < delay_indicator.size() && !end; i++)
         {
             cout << delay_indicator[i];
             cout.flush();
