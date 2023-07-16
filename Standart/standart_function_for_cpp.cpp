@@ -220,7 +220,20 @@ void self_sort_v_hm(vector<int> &some_vector)
         }
     }
 }
+/* 
+void get_delay_indicator_with_functiion(auto &function, auto &parameter)
+{
 
+    bool end_delay = false;
+
+    thread th([&]()
+              { function(parameter);
+        end_delay = true; });
+
+    th.detach();
+    Delay_indicator(end_delay);
+}
+ */
 void Delay_indicator(int second)
 {
     static vector<char> delay_indicator = {'|', '/', '-', '\\'};

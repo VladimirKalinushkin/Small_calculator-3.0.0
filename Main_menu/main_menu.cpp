@@ -5,31 +5,31 @@
 
 void main_menu(Settings &Main_settings, TokenStream &Stream) {
 
-    bool end = true;
-
     while (cin) {
 
         try {
 
             out_promt(Main_settings);
 
-            if(check_exit_simbol(Stream))
+            if(Main_settings.get_mode_input() == Modes_input::console && check_exit_simbol(Stream)) 
                 return;
 
-            enable_Main_modes(Main_settings, Stream);
+            if(Main_settings.get_mode_input() == Modes_input::console && enable_Main_modes(Main_settings, Stream))
+                continue;
+            
+            Mathematic_result result;
+            enable_Mathematic_modes(Stream, result);
+            result.out_math_expression_s_result(Main_settings);
+
+            check_correct_end_input(Stream);
+            
         }
         catch (MainException &ex) {
+
             errors_handler(ex, Main_settings);
+            
         }
-        catch (const char* msg) {
-
-            cerr << msg << '\n';
-            Stream.clear();
-
-        }
-
     }
-    
 } 
 
 void out_promt(Settings &Main_settings) {
@@ -43,36 +43,33 @@ void out_promt(Settings &Main_settings) {
 bool check_exit_simbol(TokenStream &Stream) {
 
     Token oper = Stream.get();
-    if(oper.type == exit_simbol && Stream.Main_settings->get_mode_input() == Modes_input::console)
+    if(oper.type == exit_simbol)
         return true;
     
     Stream.putback(oper);
     return false;
 
 }
-
-void enable_Main_modes(Settings &Main_settings, TokenStream &Stream) {
+bool enable_Main_modes(Settings &Main_settings, TokenStream &Stream) {
     
     Token oper = Stream.get();
 
-    if(oper.type == help && Main_settings.get_mode_input() == Modes_input::console) {
+    if(oper.type == help) {
         help_out();
-        return; 
+        return true; 
     }
-    else if(oper.type == settings && Main_settings.get_mode_input() == Modes_input::console) {
+    else if(oper.type == settings) {
         Main_settings.main_menu_to_set_all_settings();
-        return;
+        return true;
     }
-    else if(oper.type == key_word && oper.word == "from_file" && Main_settings.get_mode_input() == Modes_input::console) {
+    else if(oper.type == key_word && oper.word == "from_file") {
         set_filestream_to_input(Main_settings);
-        return;
+        return true;
     }
-    else { 
+    else
         Stream.putback(oper);
-        enable_mode(Main_settings, Stream);
-        check_correct_end_input(Stream);
-        
-    }
+    
+    return false;
 
 }
 
@@ -106,5 +103,7 @@ void errors_handler(MainException &ex, Settings &Main_settings) {
     }
     else
         cerr << "Не удалось открыть файл вывода лога! \n";
+
+    file_to_output_log.close();
     
 }

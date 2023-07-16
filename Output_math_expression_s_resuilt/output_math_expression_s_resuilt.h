@@ -1,12 +1,25 @@
 
-void out_math_expression_result(Settings & Main_Settings, const double &result);
-void out_math_expression_result(Settings & Main_Settings, const Roman_int &result);
+class Mathematic_result {
 
-void output_result_to_file(ofstream &file_to_output, const double &result);
-void output_result_to_file(ofstream &file_to_output, const Roman_int &result);
-void output_resuilt_to_console(const double &result);
-void output_resuilt_to_console(const Roman_int &result);
+public:
+    Mathematic_result() {};
+    Mathematic_result(double _result) { _double_result = _result; _activate_output = true; }
+    Mathematic_result(Roman_int _result) { _roman_int_result = _result; _activate_output = true; }
+
+    void out_math_expression_s_result(Settings & Main_Settings);
+
+private:
+    double _double_result;
+    Roman_int _roman_int_result;
+
+    bool _activate_output = false;
+    ofstream file_to_output;
+
+    void output_result_to_file(Settings &Main_settings);
+    void output_resuilt_to_console(Settings &Main_settings);
+    void self_output_result(Settings &Main_settings, ostream &os);
+    bool open_file_to_output(const string  name);
+};
 
 bool output_is_to_file(Settings &Main_settings);
 bool output_is_to_console(Settings &Main_settings);
-ofstream open_file_for_output(const string name);

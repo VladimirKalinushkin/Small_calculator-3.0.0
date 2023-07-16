@@ -1,4 +1,7 @@
 
+#define NOT_ARCHIVED_MESSAGE_OF_END_FILE true
+#define NOT_ARCHIVED_ERROR_INPUT_OF_END_FILE true
+
 const char* print_result = ": ";
 const char* promt = ">> ";
 
@@ -39,7 +42,7 @@ const map <string, double> constantes = {
     {"pi", 3.14159265}, 
     {"e", 2.71828}
 
-    };
+};
 const set <string> key_vords = {
 
     "var",
@@ -89,5 +92,3 @@ enum Modes_output_with_file {
     on_to_console_and_file = 'a'
 
 };
-
-static bool Graphick_delay_must_be_end = true;

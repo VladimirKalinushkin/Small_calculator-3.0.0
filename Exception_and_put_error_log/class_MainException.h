@@ -7,11 +7,17 @@ public:
     MainException(const char *message);
     MainException(const Token &value, const char *message);
 
+    MainException(bool not_archived);
+    MainException(const char *message, bool not_archived);
+    MainException(const Token &value, const char *message, bool not_archived);
+
     void what();
     void put_to_file(ofstream &file_to_output_log);
 
 private:
     Packet_exception_output _value;
+    
+    bool _not_archived = false;
 };
 
 ostream &operator<<(ostream &os, Token t);

@@ -7,8 +7,7 @@ public:
                  double> &constantes,
                  const set <string> &key_vords,
                  const set <string> &mathematic_functions,
-                 Settings &settings,
-                 ifstream &file_to_input
+                 Settings &settings
                 );
 
     Token get();
@@ -20,7 +19,6 @@ public:
     void set_Varriable(const string &s, const double &value);
 
     Settings *Main_settings;
-    ifstream *_file_for_input;
 
 private:
 
@@ -30,15 +28,16 @@ private:
     vector <Token> FunctionsNameStream;
     vector <Token> VarriablesStream;
 
-    Token get_new_Token();
+    ifstream _file_for_input;
+    
+    void inicialiseStream(const map <string, double> &constantes, const set <string> &key_vords, const set <string> &mathematic_functions);
     
     Token set_Token_type(const Token &buffer);
-    void inicialiseStream(const map <string, double> &constantes, const set <string> &key_vords, const set <string> &mathematic_functions);
+    
+    Token get_new_Token();
+    Token read_Token(istream &is);
+    void open_or_close_file_with_end();
 
 };
 
-Token read_Token(istream &is);
-
-void open_or_close_file_for_input(ifstream &_file_for_input, Settings &Main_settings);
-void throw_new_Main_exception_with_error_input_from_file(ifstream &_file_for_input);
-void close_file_input_with_error(ifstream &_file_for_input, Settings &Main_settings);
+void check_error_and_close_file(ifstream &_file_for_input, Settings &Main_settings);

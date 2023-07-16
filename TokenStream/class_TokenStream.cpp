@@ -8,13 +8,46 @@ TokenStream::TokenStream(   const map <string,
                             double> &constantes, 
                             const set <string> &key_vords, 
                             const set <string> &mathematic_functions, 
-                            Settings &settings,
-                            ifstream &file_for_input) {
+                            Settings &settings) {
 
     inicialiseStream(constantes, key_vords, mathematic_functions);
     Main_settings = &settings;
-    _file_for_input = &file_for_input;
 
+}
+
+void TokenStream::inicialiseStream(const map <string, double> &constantes, const set <string> &key_vords, const set <string> &mathematic_functions){
+
+    for(auto c : constantes)
+    {
+        Token T(c.first, c.second);
+        T.type = type_lexeme::constante;
+        ConstantesStream.push_back(T);
+    }
+
+    for(auto k : key_vords)
+    {
+        Token T(k);
+        T.type = type_lexeme::key_word;
+        KeyWordsStream.push_back(T);
+    }
+
+    for(auto m : mathematic_functions)
+    {
+        Token T(m);
+        T.type = type_lexeme::function;
+        ConstantesStream.push_back(T);
+    }
+
+}
+
+void TokenStream::clear() {
+
+    Stream.clear();
+
+    if(Main_settings->get_mode_input() == Modes_input::file)
+        clear_istream(_file_for_input);
+    else
+        clear_istream(cin);
 }
 
 Token TokenStream::get() {
@@ -40,53 +73,32 @@ Token TokenStream::get() {
     }
 
 }
-Token TokenStream::get_new_Token() {
-
-    try {
-
-        if(Main_settings->get_mode_input() == Modes_input::console)
-            return read_Token(cin);
-                
-        else if(Main_settings->get_mode_input() == Modes_input::file)  {
-
-            open_or_close_file_for_input(*_file_for_input, *Main_settings);
-
-            if(*_file_for_input) 
-                return read_Token(*_file_for_input);
-
-        }
-                    
-    }
-    catch(MainException & ex) {
-
-        Main_settings->set_mode_input(Modes_input::console);
-        throw ex;
-    
-    }
-    catch(const char* msg) {
-
-        _file_for_input->close();
-        Main_settings->set_mode_input(Modes_input::console);
-        throw msg;
-    
-    }
-
-}
-
 void TokenStream::putback(Token buffer) {
 
     Stream.push_back(buffer);
 
 }
 
-void TokenStream::clear() {
+void TokenStream::inicialise_Varriable(const string &s, const double &value){
 
-    Stream.clear();
+    Token new_Varriable(s, value);
+    new_Varriable.type = type_lexeme::varriable;
+    VarriablesStream.push_back(new_Varriable);
 
-    if(Main_settings->get_mode_input() == Modes_input::file)
-        clear_istream(*_file_for_input);
-    else
-        clear_istream(cin);
+}
+void TokenStream::set_Varriable(const string &s, const double &value) {
+
+    for(int i = 0; i < VarriablesStream.size(); i++)
+    {
+        if(VarriablesStream[i].word == s)
+        {
+            VarriablesStream[i].value = value;
+            return;
+        }
+    }
+
+    throw MainException(("Неизвестная переменная!"));
+
 }
 
 Token TokenStream::set_Token_type(const Token &buffer) {
@@ -120,56 +132,29 @@ Token TokenStream::set_Token_type(const Token &buffer) {
 
 }
 
-void TokenStream::inicialise_Varriable(const string &s, const double &value){
+Token TokenStream::get_new_Token() {
 
-    Token new_Varriable(s, value);
-    new_Varriable.type = type_lexeme::varriable;
-    VarriablesStream.push_back(new_Varriable);
+    if(Main_settings->get_mode_input() == Modes_input::console)
+        return read_Token(cin);
+         
+    else if(Main_settings->get_mode_input() == Modes_input::file){
 
-}
-void TokenStream::set_Varriable(const string &s, const double &value) {
+        open_or_close_file_with_end();
 
-    for(int i = 0; i < VarriablesStream.size(); i++)
-    {
-        if(VarriablesStream[i].word == s)
-        {
-            VarriablesStream[i].value = value;
-            return;
+        if(_file_for_input.is_open())
+            return read_Token(_file_for_input);
+
+        else {
+
+            Main_settings->set_mode_input(Modes_input::console);
+            throw MainException("Ошибка при чтении файла!");
+            
         }
-    }
 
-    throw MainException(("Неизвестная переменная!"));
-
-}
-
-
-void TokenStream::inicialiseStream(const map <string, double> &constantes, const set <string> &key_vords, const set <string> &mathematic_functions){
-
-    for(auto c : constantes)
-    {
-        Token T(c.first, c.second);
-        T.type = type_lexeme::constante;
-        ConstantesStream.push_back(T);
-    }
-
-    for(auto k : key_vords)
-    {
-        Token T(k);
-        T.type = type_lexeme::key_word;
-        KeyWordsStream.push_back(T);
-    }
-
-    for(auto m : mathematic_functions)
-    {
-        Token T(m);
-        T.type = type_lexeme::function;
-        ConstantesStream.push_back(T);
     }
 
 }
-
-
-Token read_Token(istream &is) {
+Token TokenStream::read_Token(istream &is) {
 
     Token ret;
     is >> ret.type;
@@ -195,39 +180,38 @@ Token read_Token(istream &is) {
     else if (Main_modes_simbols.count(ret.type) && (!isalpha(ret.type) || ( isalpha(ret.type) && !isalpha(is.peek() ) ) ) )
         return ret;
     
-    else if(!is && is.peek() == EOF) 
-        throw "Конец файла!";
-    
+    else if(!is && is.peek() == EOF) {
+        throw MainException("Конец файла!", NOT_ARCHIVED_ERROR_INPUT_OF_END_FILE);
+    }
     else
         throw MainException(ret, "Неправильный ввод!");
 
 }
+void TokenStream::open_or_close_file_with_end() {
 
-void open_or_close_file_for_input(ifstream &_file_for_input, Settings &Main_settings) {
-
-    if(!_file_for_input.is_open())
-        _file_for_input.open(Main_settings.get_name_file_to_input());
-
-    close_file_input_with_error(_file_for_input, Main_settings);
-
-    throw_new_Main_exception_with_error_input_from_file(_file_for_input);
-
-}
-void throw_new_Main_exception_with_error_input_from_file(ifstream &_file_for_input) {
-
-    if(_file_for_input.fail())
-        throw MainException("Невозможно открыть файл!");
-    else if(_file_for_input.bad())
-        throw MainException("Ошибка при чтении файла!");
-    else if(_file_for_input.eof() || _file_for_input.peek() == EOF)
-        throw MainException("Файл успешно считан!");
-
-}
-void close_file_input_with_error(ifstream &_file_for_input, Settings &Main_settings) {
-
-    if( _file_for_input.fail() || _file_for_input.bad() ||
-        _file_for_input.eof() || _file_for_input.peek() == EOF)
-            _file_for_input.close();
+    if(Main_settings->get_mode_input() == Modes_input::file)
+        if(!_file_for_input.is_open())
+            _file_for_input.open(Main_settings->get_name_file_to_input());
     
+    check_error_and_close_file(_file_for_input, *Main_settings);
+    
+}
+
+void check_error_and_close_file(ifstream &file_for_input, Settings &Main_settings) {
+
+    if( file_for_input.fail() || file_for_input.bad() || file_for_input.eof() || file_for_input.peek() == EOF) {
+        file_for_input.close();
+        Main_settings.set_mode_input(Modes_input::console);
+    }
+
+    if(file_for_input.fail())
+        throw MainException("Невозможно открыть файл!");
+
+    else if(file_for_input.bad())
+        throw MainException("Ошибка при чтении файла!");
+
+    else if(file_for_input.eof() || file_for_input.peek() == EOF)
+        throw MainException("Файл успешно считан!", NOT_ARCHIVED_MESSAGE_OF_END_FILE);
+
 }
 

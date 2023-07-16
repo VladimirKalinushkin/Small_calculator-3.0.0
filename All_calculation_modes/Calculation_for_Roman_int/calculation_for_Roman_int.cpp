@@ -3,14 +3,12 @@
 #include "calculation_for_Roman_int.h"
 
 
-void expression_handler_for_Roman_int(Settings &Main_settings, TokenStream &Stream)
-{
+void expression_Mathematic_handler_for_Roman_int(TokenStream &Stream, Mathematic_result &result) {
 
     try
     {
-        Roman_int result = third_order_for_Roman_int(Stream);
-
-        out_math_expression_s_result(Main_settings, result);
+        Roman_int _result = third_order_for_Roman_int(Stream);
+        result = Mathematic_result(_result);
 
     }
     catch(Roman_int::exeption ex)

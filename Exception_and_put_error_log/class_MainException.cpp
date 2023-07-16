@@ -2,21 +2,41 @@
 #pragma once
 #include "class_MainException.h"
 
-MainException::MainException(const char *message)
-{
-    _value = Packet_exception_output(message);
+MainException::MainException(bool not_archived) {
+
+    *this = MainException();
+    not_archived = not_archived;
+
 }
-MainException::MainException(const Token &value, const char *message)
-{
-    _value = Packet_exception_output(value, message);
+MainException::MainException(const char *message, bool not_archived) {
+
+    *this = MainException(message); 
+    _not_archived = not_archived;
+
+}
+MainException::MainException(const Token &value, const char *message, bool not_archived) {
+
+    *this = MainException(value, message);
+    _not_archived = not_archived;
+
 }
 
-void MainException::what()
-{
+MainException::MainException(const char *message) {
+
+    _value = Packet_exception_output(message);
+
+}
+MainException::MainException(const Token &value, const char *message) {
+
+    _value = Packet_exception_output(value, message);
+
+}
+
+void MainException::what() {
+
     cerr << this->_value._message
          << '\n';
             
-
     if(_value._value.type)
         cerr    << "( "
                 << "Передано: "
@@ -30,9 +50,11 @@ void MainException::what()
 
 }
 
-void MainException::put_to_file(ofstream &file_to_output_log)
-{
+void MainException::put_to_file(ofstream &file_to_output_log) {
 
+    if(_not_archived)
+        return;
+        
     file_to_output_log << _value;
 
 }
