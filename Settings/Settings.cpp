@@ -24,7 +24,7 @@ void Settings::main_menu_to_set_all_settings() {
              << "чтобы указать имя файла для вывода - n, "
              << "для выхода - e: "
              << '\n'
-             << promt;
+             << PROMT;
              
         char ch;
         cin >> ch;
@@ -58,7 +58,7 @@ void Settings::set_mode_calculating()
     
     cout << "Введите режим работы вычислений (полный режим с арабскими числами или ограниченный - с римскими): " 
          << char(Modes_calculating::arabian) << " / " << char (Modes_calculating::roman) 
-         << '\n' << promt;
+         << '\n' << PROMT;
     
     char mode;
     cin >> mode;
@@ -81,7 +81,7 @@ void Settings::set_mode_output() {
 
     cout << "Введите режим вывода (только в консоль, в консоль и в файл, или только в файл): " 
          << char(Modes_output::to_console) << " / " << char (Modes_output::to_console_and_file) << " / " << char(Modes_output::to_file)
-         << '\n' << promt;
+         << '\n' << PROMT;
     
     char mode;
     cin >> mode;
@@ -105,7 +105,7 @@ void Settings::set_mode_output_with_file() {
 
     cout << "Введите режим вывода при вводе из файла (в консоль и файл или только в файл): " 
          << char(Modes_output_with_file::on_to_console_and_file) << " / " << char (Modes_output_with_file::on_to_file)
-         << '\n' << promt;
+         << '\n' << PROMT;
     
     char mode;
     cin >> mode;
@@ -128,10 +128,37 @@ void Settings::set_mode_output_with_file() {
 void Settings::set_name_file_to_output() {
 
     string name;
-    cout << "Введите имя файла: \n" << promt;
+    cout << "Введите имя файла: \n" << PROMT;
     cin >> name;
 
     _name_file_to_output = name;
 
 
 }
+
+bool Settings::promt_must_otput() {
+
+    return ( _mode_input == Modes_input::console || 
+        _mode_output_with_file == Modes_output_with_file::on_to_console_and_file );
+}
+bool Settings::output_is_to_file() {
+
+    return ( 
+        _mode_input == Modes_input::file ||
+        _mode_output == Modes_output::to_file ||
+        _mode_output == Modes_output::to_console_and_file 
+    );
+}
+bool Settings::output_is_to_console() {
+    
+    return ( 
+        _mode_input == Modes_input::console && (
+            _mode_output == Modes_output::to_console ||
+            _mode_output == Modes_output::to_console_and_file ) ||  
+        (
+            _mode_input == Modes_input::file &&
+            _mode_output_with_file == Modes_output_with_file::on_to_console_and_file 
+        )
+    );
+}
+

@@ -4,8 +4,6 @@
 
 void main_menu(Settings &Main_settings,  TokenStream &Stream);
 
-void out_promt(Settings &Main_settings);
-
 bool check_exit_simbol(TokenStream &Stream);
 bool enable_Main_modes(Settings &Main_settings, TokenStream &Stream);
 

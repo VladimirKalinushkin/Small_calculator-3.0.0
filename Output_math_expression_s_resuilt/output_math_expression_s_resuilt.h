@@ -20,6 +20,3 @@ private:
     void self_output_result(Settings &Main_settings, ostream &os);
     bool open_file_to_output(const string  name);
 };
-
-bool output_is_to_file(Settings &Main_settings);
-bool output_is_to_console(Settings &Main_settings);

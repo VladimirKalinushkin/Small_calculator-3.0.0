@@ -9,7 +9,8 @@ void main_menu(Settings &Main_settings, TokenStream &Stream) {
 
         try {
 
-            out_promt(Main_settings);
+            if(Main_settings.promt_must_otput())
+                cout << PROMT;
 
             if(Main_settings.get_mode_input() == Modes_input::console && check_exit_simbol(Stream)) 
                 return;
@@ -18,7 +19,7 @@ void main_menu(Settings &Main_settings, TokenStream &Stream) {
                 continue;
             
             Mathematic_result result;
-            enable_Mathematic_modes(Stream, result);
+            enable_Mathematic_modes(Stream, Main_settings, result);
             result.out_math_expression_s_result(Main_settings);
 
             check_correct_end_input(Stream);
@@ -31,14 +32,6 @@ void main_menu(Settings &Main_settings, TokenStream &Stream) {
         }
     }
 } 
-
-void out_promt(Settings &Main_settings) {
-
-    if( Main_settings.get_mode_input() == Modes_input::console || 
-        Main_settings.get_mode_output_with_file() == Modes_output_with_file::on_to_console_and_file )
-        cout << promt;
-
-}
 
 bool check_exit_simbol(TokenStream &Stream) {
 
@@ -76,7 +69,7 @@ bool enable_Main_modes(Settings &Main_settings, TokenStream &Stream) {
 void set_filestream_to_input(Settings &Main_settings) {
 
     string name;
-    cout << "Введите имя файла: " << promt;
+    cout << "Введите имя файла: " << PROMT;
     cin >> name;
 
     Main_settings.set_mode_input(Modes_input::file, name);

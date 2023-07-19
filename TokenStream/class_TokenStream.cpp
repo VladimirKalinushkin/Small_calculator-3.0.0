@@ -4,35 +4,37 @@
 #include "class_TokenStream.h"
 
 
-TokenStream::TokenStream(   const map <string, 
-                            double> &constantes, 
+TokenStream::TokenStream(   const map <string, double> &constantes, 
                             const set <string> &key_vords, 
                             const set <string> &mathematic_functions, 
                             Settings &settings) {
 
     inicialiseStream(constantes, key_vords, mathematic_functions);
+
     Main_settings = &settings;
 
 }
 
-void TokenStream::inicialiseStream(const map <string, double> &constantes, const set <string> &key_vords, const set <string> &mathematic_functions){
+void TokenStream::inicialiseStream( const map <string, double> &constantes, 
+                                    const set <string> &key_vords, 
+                                    const set <string> &mathematic_functions){
 
-    for(auto c : constantes)
-    {
+    for(auto c : constantes) {
+        
         Token T(c.first, c.second);
         T.type = type_lexeme::constante;
         ConstantesStream.push_back(T);
     }
 
-    for(auto k : key_vords)
-    {
+    for(auto k : key_vords) {
+
         Token T(k);
         T.type = type_lexeme::key_word;
         KeyWordsStream.push_back(T);
     }
 
-    for(auto m : mathematic_functions)
-    {
+    for(auto m : mathematic_functions) {
+
         Token T(m);
         T.type = type_lexeme::function;
         ConstantesStream.push_back(T);
@@ -106,28 +108,21 @@ Token TokenStream::set_Token_type(const Token &buffer) {
     string s = buffer.word;
     
     for(auto t : ConstantesStream)
-    {
         if(t.word == s)
             return t;
-    }
-    
+        
     for(auto t : KeyWordsStream)
-    {
         if(t.word == s)
             return t;
-    }
-    
+        
     for(auto t : FunctionsNameStream)
-    {
         if(t.word == s)
             return t;
-    }
-
+    
     for(auto t : VarriablesStream)
-    {
         if(t.word == s)
             return t;
-    }
+    
     return buffer;
 
 }

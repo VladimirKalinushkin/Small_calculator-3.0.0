@@ -1,15 +1,15 @@
 
 #include "enable_Mathematic_mode.h"
 
-void enable_Mathematic_modes(TokenStream &Stream, Mathematic_result &result) {
+void enable_Mathematic_modes(TokenStream &Stream, Settings &Main_settings, Mathematic_result &result) {
     
-    if( Stream.Main_settings->get_mode_input() == Modes_input::file)
-        return get_delay_and_enable_mode(Stream.Main_settings->get_mode_calculating(), Stream, result);
+    if( Main_settings.get_mode_input() == Modes_input::file)
+        return get_delay_and_enable_mode(Main_settings.get_mode_calculating(), Stream, result);
     
-    else if(Stream.Main_settings->get_mode_calculating() == Modes_calculating::arabian)
+    else if(Main_settings.get_mode_calculating() == Modes_calculating::arabian)
         expression_Mathematic_handler(Stream, result);
 
-    else if(Stream.Main_settings->get_mode_calculating() == Modes_calculating::roman)
+    else if(Main_settings.get_mode_calculating() == Modes_calculating::roman)
         expression_Mathematic_handler_for_Roman_int(Stream, result);
 
 }
