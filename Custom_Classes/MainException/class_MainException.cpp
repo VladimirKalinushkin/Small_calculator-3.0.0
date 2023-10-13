@@ -1,5 +1,4 @@
 
-#pragma once
 #include "class_MainException.h"
 
 MainException::MainException(bool not_archived) {
@@ -117,4 +116,14 @@ ostream &operator<<(ostream &os, Packet_exception_output p)
        << '\n';
 
     return os;
+}
+
+
+Packet_exception_output::Packet_exception_output(const char *message) {
+    _message = message;
+}
+
+Packet_exception_output::Packet_exception_output(const Token &value, const char *message) {
+    _value = value;
+    _message = message;
 }

@@ -1,6 +1,6 @@
 
 #pragma once
-#include "Settings.h"
+#include "class_Settings.h"
 
 
 Settings::Settings()

@@ -1,6 +1,6 @@
 
 #pragma once
-#include "output_math_expression_s_resuilt.h"
+#include "class_Mathematic_result.h"
 
 
 void Mathematic_result::out_math_expression_s_result(Settings & Main_Settings) {
