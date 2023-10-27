@@ -39,7 +39,22 @@ enum type_lexeme{
     constante = 'c',
     key_word = 'k',
     varriable = 'v',
-    function = 'f'
+    function = 'f',
+    
+    _equality = '=',
+    _minus = '-', 
+    _plus = '+',
+    _multiple = '*',
+    _drobbe = '/', 
+    _left_bracket = '(',
+    _right_bracket = ')', 
+    _mod = '^', 
+    _comma = ',',
+
+    _exit_simbol = 'q',
+    _help = '?',
+    _settings = 's',
+    _print = ';',
 
 };
 

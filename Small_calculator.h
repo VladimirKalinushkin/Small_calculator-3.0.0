@@ -28,11 +28,9 @@ using namespace std;
 #include "Custom_Classes/TokenStream/class_TokenStream.cpp"
 #include "Custom_Classes/Mathematic_result/class_Mathematic_result.cpp"
 
-
 #include "global_static_objects.h"
 
 
 #include "All_calculation_modes/all_calculation_modes.h"
-
 #include "Main_menu/main_menu.cpp"
 

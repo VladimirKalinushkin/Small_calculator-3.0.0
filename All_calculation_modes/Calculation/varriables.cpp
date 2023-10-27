@@ -13,7 +13,7 @@ bool create_or_set_varriable(TokenStream &Stream) {
     else if(oper.type == type_lexeme::varriable) {
 
         Token new_oper = Stream.get();
-        if( new_oper.type == '=') {
+        if( new_oper.type == equality) {
 
             set_Varriable(Stream, oper);
             return true;
@@ -32,7 +32,7 @@ void create_varriable(TokenStream &Stream){
     Token oper = Stream.get();
     if (oper.type == type_lexeme::word) {
 
-        if (Stream.get().type == '=') {
+        if (Stream.get().type == equality) {
 
             string name = oper.word;
             double value = third_order(Stream);
