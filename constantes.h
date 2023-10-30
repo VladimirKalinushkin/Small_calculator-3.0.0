@@ -6,6 +6,31 @@
 #define PRINT_RESULT ": "
 #define PROMT ">> "
 
+BETTER_ENUM(
+    Type_lexeme, 
+    char,     
+    number = 'n',
+    word = 'w',
+    constante = 'c',
+    key_word = 'k',
+    varriable = 'v',
+    function = 'f',
+    
+    equality = '=',
+    minus = '-', 
+    plus = '+',
+    multiple = '*',
+    drobbe = '/', 
+    left_bracket = '(',
+    right_bracket = ')', 
+    mod = '^', 
+    comma = ',',
+
+    exit_simbol = 'q',
+    help = '?',
+    settings = 's',
+    print = ';');
+
 enum Modes_calculating {
 
     arabian = 'a',
@@ -30,54 +55,6 @@ enum Modes_output_with_file {
     on_to_file = 'f',
     on_to_console_and_file = 'a'
 
-};
-
-enum type_lexeme{
-
-    number = 'n',
-    word = 'w',
-    constante = 'c',
-    key_word = 'k',
-    varriable = 'v',
-    function = 'f',
-    
-    _equality = '=',
-    _minus = '-', 
-    _plus = '+',
-    _multiple = '*',
-    _drobbe = '/', 
-    _left_bracket = '(',
-    _right_bracket = ')', 
-    _mod = '^', 
-    _comma = ',',
-
-    _exit_simbol = 'q',
-    _help = '?',
-    _settings = 's',
-    _print = ';',
-
-};
-
-const char exit_simbol = 'q';
-const char help = '?';
-const char settings = 's';
-const char print = ';';
-const char equality = '=';
-
-const set <char> Main_modes_simbols = {
-    exit_simbol,
-    help,
-    settings,
-    print,
-    equality,
-    '-', 
-    '+',
-    '*',
-    '/', 
-    '(',
-    ')', 
-    '^', 
-    ','
 };
 
 const map <string, double> constantes = {

@@ -84,9 +84,9 @@ double primary(TokenStream &Stream) {
 
     switch (oper.type) {
 
-        case type_lexeme::constante:
-        case type_lexeme::number:
-        case type_lexeme::varriable:{
+        case Type_lexeme::constante:
+        case Type_lexeme::number:
+        case Type_lexeme::varriable:{
 
             return oper.value;
             break;
@@ -108,15 +108,15 @@ double primary(TokenStream &Stream) {
             break;
 
         }
-        case type_lexeme::function:{
+        case Type_lexeme::function:{
             Stream.putback(oper);
             return math_function(Stream);
             break;
         }
-        case type_lexeme::word: {
+        case Type_lexeme::word: {
             throw MainException(oper, " Переменная не инициализирована!");
             break;}
-        case type_lexeme::key_word: {
+        case Type_lexeme::key_word: {
             throw MainException(oper, " Имя занято!");
             break;}
         default:{

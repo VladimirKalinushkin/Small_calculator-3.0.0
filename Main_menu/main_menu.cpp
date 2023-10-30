@@ -36,7 +36,7 @@ void main_menu(Settings &Main_settings, TokenStream &Stream) {
 bool check_exit_simbol(TokenStream &Stream) {
 
     Token oper = Stream.get();
-    if(oper.type == exit_simbol)
+    if(oper.type ==  Type_lexeme::exit_simbol)
         return true;
     
     Stream.putback(oper);
@@ -47,15 +47,15 @@ bool enable_Main_modes(Settings &Main_settings, TokenStream &Stream) {
     
     Token oper = Stream.get();
 
-    if(oper.type == help) {
+    if(oper.type == Type_lexeme::help) {
         help_out();
         return true; 
     }
-    else if(oper.type == settings) {
+    else if(oper.type == Type_lexeme::settings) {
         Main_settings.main_menu_to_set_all_settings();
         return true;
     }
-    else if(oper.type == key_word && oper.word == "from_file") {
+    else if(oper.type == Type_lexeme::key_word && oper.word == "from_file") {
         set_filestream_to_input(Main_settings);
         return true;
     }
@@ -77,7 +77,7 @@ void set_filestream_to_input(Settings &Main_settings) {
 void check_correct_end_input(TokenStream &Stream) {
     
     Token oper = Stream.get();
-    if(oper.type != print) {
+    if(oper.type != Type_lexeme::print) {
         throw MainException(oper, "Выражение неправильно завершено! Нет ';' !");
     };
 

@@ -14,12 +14,13 @@
 
 using namespace std;
 
-#include "constantes.h"
-
-
+#include "Libraries/better-enums/enum.h"
 #include "Libraries/Other_function.hpp"
 #include "Libraries/Roman_int.hpp"
 #include "Libraries/Chrono.hpp"
+
+#include "constantes.h"
+
 
 //Для пользовательских классов важен порядок включения (смотри описание)
 #include "Custom_Classes/Token/class_Token.h"

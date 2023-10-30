@@ -22,21 +22,21 @@ void TokenStream::inicialiseStream( const map <string, double> &constantes,
     for(auto c : constantes) {
         
         Token T(c.first, c.second);
-        T.type = type_lexeme::constante;
+        T.type = Type_lexeme::constante;
         ConstantesStream.push_back(T);
     }
 
     for(auto k : key_vords) {
 
         Token T(k);
-        T.type = type_lexeme::key_word;
+        T.type = Type_lexeme::key_word;
         KeyWordsStream.push_back(T);
     }
 
     for(auto m : mathematic_functions) {
 
         Token T(m);
-        T.type = type_lexeme::function;
+        T.type = Type_lexeme::function;
         ConstantesStream.push_back(T);
     }
 
@@ -67,7 +67,7 @@ Token TokenStream::get() {
 
         buffer = get_new_Token();
         
-        if (buffer.type == type_lexeme::word)
+        if (buffer.type == Type_lexeme::word)
             return set_Token_type(buffer);
 
         return buffer;
@@ -84,7 +84,7 @@ void TokenStream::putback(Token buffer) {
 void TokenStream::inicialise_Varriable(const string &s, const double &value){
 
     Token new_Varriable(s, value);
-    new_Varriable.type = type_lexeme::varriable;
+    new_Varriable.type = Type_lexeme::varriable;
     VarriablesStream.push_back(new_Varriable);
 
 }
@@ -152,27 +152,28 @@ Token TokenStream::get_new_Token() {
 Token TokenStream::read_Token(istream &is) {
 
     Token ret;
+    Type_lexeme type = Type_lexeme::_values()[0];
     is >> ret.type;
 
     if (isdigit(ret.type)) {
 
         is.putback(ret.type);
         is >> ret.value;
-        ret.type = type_lexeme::number;
+        ret.type = Type_lexeme::number;
         return ret;
     
     }
 
-    else if ( isalpha(ret.type) && ( isalpha( is.peek()) || !Main_modes_simbols.count(ret.type) ) ) {
+    else if ( isalpha(ret.type) && ( isalpha( is.peek()) || !(type._is_valid(ret.type)) ) ) {
 
         is.putback(ret.type);
         ret.word = get_word_from_string(is);
-        ret.type = type_lexeme::word;
+        ret.type = Type_lexeme::word;
         return ret;
     
     }
 
-    else if (Main_modes_simbols.count(ret.type) && (!isalpha(ret.type) || ( isalpha(ret.type) && !isalpha(is.peek() ) ) ) )
+    else if ((type._is_valid(ret.type)) && (!isalpha(ret.type) || ( isalpha(ret.type) && !isalpha(is.peek() ) ) ) )
         return ret;
     
     else if(!is && is.peek() == EOF) {

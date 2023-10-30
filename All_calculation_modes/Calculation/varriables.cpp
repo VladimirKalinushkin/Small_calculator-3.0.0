@@ -5,15 +5,15 @@
 bool create_or_set_varriable(TokenStream &Stream) {
 
     Token oper = Stream.get();
-    if(oper.type == type_lexeme::key_word && oper.word == "var"){
+    if(oper.type == Type_lexeme::key_word && oper.word == "var"){
 
         create_varriable(Stream);
         return true;
     }    
-    else if(oper.type == type_lexeme::varriable) {
+    else if(oper.type == Type_lexeme::varriable) {
 
         Token new_oper = Stream.get();
-        if( new_oper.type == equality) {
+        if( new_oper.type == Type_lexeme::equality) {
 
             set_Varriable(Stream, oper);
             return true;
@@ -30,9 +30,9 @@ bool create_or_set_varriable(TokenStream &Stream) {
 void create_varriable(TokenStream &Stream){
 
     Token oper = Stream.get();
-    if (oper.type == type_lexeme::word) {
+    if (oper.type == Type_lexeme::word) {
 
-        if (Stream.get().type == equality) {
+        if (Stream.get().type == Type_lexeme::equality) {
 
             string name = oper.word;
             double value = third_order(Stream);

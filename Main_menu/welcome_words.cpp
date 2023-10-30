@@ -5,11 +5,11 @@ void welcome_words() {
         << "Введите выражение, завершите его "
         << ';'
         << " . Для выхода введите "
-        << exit_simbol
+        << Type_lexeme::exit_simbol
         << ", для прочих вопросов введите "
-        << help
+        << Type_lexeme::help
         << ", для настроек - "
-        << settings
+        << Type_lexeme::settings
         << '\n';
 }
 

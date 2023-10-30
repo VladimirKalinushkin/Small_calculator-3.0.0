@@ -8,9 +8,9 @@ public:
     string word = "";
 
     Token() {}
-    Token (string w, double v) {type = type_lexeme::constante; word = w; value = v;}
-    Token (double v) { type = type_lexeme::number; value = v; }
-    Token (string w) { type = type_lexeme::word; word = w; }
+    Token (string w, double v) {type = Type_lexeme::constante; word = w; value = v;}
+    Token (double v) { type = Type_lexeme::number; value = v; }
+    Token (string w) { type = Type_lexeme::word; word = w; }
 
 };
 
