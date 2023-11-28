@@ -28,6 +28,7 @@ class Settings
 
 
         const char* name_file_to_error_log = "error_log.log";
+        const char* name_file_to_manual = "Manuals/manual";
 
     private:
 

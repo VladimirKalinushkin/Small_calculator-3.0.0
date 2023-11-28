@@ -1,11 +1,13 @@
 
-#include "help.cpp"
 #include "welcome_words.cpp"
 
 void main_menu(Settings &Main_settings,  TokenStream &Stream);
 
 bool enable_Main_modes(Settings &Main_settings, TokenStream &Stream);
 bool check_exit_simbol(TokenStream &Stream);
+
+
+void help_out(Settings &Main_settings);
 
 
 void menu_to_set_Main_settings(Settings &Main_settings);
