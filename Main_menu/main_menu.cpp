@@ -73,7 +73,7 @@ void help_out(Settings &Main_settings) {
     char ch;
 
     if(!manual.good() || manual.bad() || manual.fail())
-        throw MainException("Невозможно отобразить файл справки!\n");
+        throw MainException("Невозможно отобразить файл справки!\n", NOT_ARCHIVED_THIS_EXCEPTION);
 
     while(manual) {
         
@@ -119,7 +119,7 @@ void menu_to_set_Main_settings(Settings &Main_settings) {
                 __set_name_file_to_output(Main_settings);
                 break;
             default:
-                throw MainException("Неправильный ввод! Экстренный выход из меню!\n");
+                throw MainException("Неправильный ввод! Экстренный выход из меню!\n", NOT_ARCHIVED_THIS_EXCEPTION);
                 break;
             }
         }
