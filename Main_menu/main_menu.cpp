@@ -49,6 +49,11 @@ bool enable_Main_modes(Settings &Main_settings, TokenStream &Stream) {
         set_filestream_to_input(Main_settings);
         return true;
     }
+    else if(oper.type == Type_lexeme::key_word && oper.word == "clear") {
+        system("clear");
+        welcome_words(); 
+        return true;
+    }
     else
         Stream.putback(oper);
 

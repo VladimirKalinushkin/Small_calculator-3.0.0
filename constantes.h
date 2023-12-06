@@ -66,7 +66,8 @@ const map <string, double> constantes = {
 const set <string> key_vords = {
 
     "var",
-    "from_file"
+    "from_file",
+    "clear"
 
 };
 const set <string> mathematic_functions = {
