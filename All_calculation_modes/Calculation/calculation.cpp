@@ -128,6 +128,7 @@ double primary(TokenStream &Stream) {
 }
 
 double math_function(TokenStream &Stream) {
+    //Будьте внимательны: порядок обработки функций очень важен!
 
     Token oper = Stream.get();
     string name = oper.word;
