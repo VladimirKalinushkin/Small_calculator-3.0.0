@@ -164,7 +164,7 @@ Token TokenStream::read_Token(istream &is) {
     
     }
 
-    else if ( isalpha(ret.type) && ( isalpha( is.peek()) || !(type._is_valid(ret.type)) ) ) {
+    else if ( isalpha(ret.type) && ( isalpha( is.peek()) || !(ret.type == Type_lexeme::settings || ret.type == Type_lexeme::exit_simbol) ) ) {
 
         is.putback(ret.type);
         ret.word = get_word_from_string(is);
@@ -173,7 +173,7 @@ Token TokenStream::read_Token(istream &is) {
     
     }
 
-    else if ((type._is_valid(ret.type)) && (!isalpha(ret.type) || ( isalpha(ret.type) && !isalpha(is.peek() ) ) ) )
+    else if ((type._is_valid(ret.type)))
         return ret;
     
     else if(!is && is.peek() == EOF) {
